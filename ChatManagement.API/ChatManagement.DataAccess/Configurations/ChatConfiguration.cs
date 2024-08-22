@@ -13,5 +13,23 @@ public class ChatConfiguration : IEntityTypeConfiguration<Chat>
         builder.Property(c => c.Title)
             .IsRequired()
             .HasMaxLength(256);
+
+        builder.HasData(new List<Chat>
+        {
+            new Chat
+            {
+                Id = Guid.NewGuid(),
+                Title = "Chat 1",
+                CreatedAt = DateTime.Now,
+                UserIds = new List<Guid> { Guid.NewGuid() }
+            },
+            new Chat
+            {
+                Id = Guid.NewGuid(),
+                Title = "Chat 2",
+                CreatedAt = DateTime.Now,
+                UserIds = new List<Guid> { Guid.NewGuid() }
+            }
+        });
     }
 }

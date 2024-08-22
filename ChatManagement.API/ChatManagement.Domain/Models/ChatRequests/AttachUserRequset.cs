@@ -1,9 +1,8 @@
 ﻿namespace ChatManagement.Domain.Models.ChatRequests;
 
-public class AddUserToChatRequset
+public class AttachUserRequest
 {
     public Guid ChatId { get; set; }
     public Guid UserToAddId { get; set; }
-    public Guid AddedByUserId { get; set; }
-    public Guid AddedByUserName { get; set; }
+    public Guid AttachedByUserId { get; set; }
 }

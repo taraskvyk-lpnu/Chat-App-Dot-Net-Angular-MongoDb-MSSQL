@@ -8,8 +8,7 @@ namespace ChatManagement.Infrastructure.Repositories;
 public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
 {
     protected readonly ChatManagementDbContext _chatContext;
-    protected readonly DbSet<TEntity> _dbSet;
-
+    internal readonly DbSet<TEntity> _dbSet;
 
     public Repository(ChatManagementDbContext chatContext)
     {
@@ -24,7 +23,17 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
 
     public async Task<IEnumerable<TEntity>> GetAllAsync()
     {
-        return await _dbSet.ToListAsync();
+        int n = _dbSet.Count();
+        try
+        {
+            return await _dbSet.ToListAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+        
     }
 
     public async Task AddAsync(TEntity entity)

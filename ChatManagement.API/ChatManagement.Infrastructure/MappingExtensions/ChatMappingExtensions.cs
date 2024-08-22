@@ -11,6 +11,8 @@ public static class ChatMappingExtensions
         {
             Id = chat.Id,
             Title = chat.Title,
+            CreatorId = chat.CreatorId,
+            CreatedAt = chat.CreatedAt,
             UserIds = chat.UserIds
         };
     }
@@ -21,6 +23,8 @@ public static class ChatMappingExtensions
         {
             Id = chatDto.Id,
             Title = chatDto.Title,
+            CreatorId = chatDto.CreatorId,
+            CreatedAt = chatDto.CreatedAt,
             UserIds = chatDto.UserIds
         };
     }

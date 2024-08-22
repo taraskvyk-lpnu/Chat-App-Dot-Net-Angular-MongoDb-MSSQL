@@ -10,11 +10,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e222e803-da46-49a8-95dd-4db5676f60de" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ChatManagement.Infrastructure/ResponseDto/ResponseDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ChatManagement.API/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ChatManagement.API/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ChatManagement.API/ChatManagement.API.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ChatManagement.API/ChatManagement.API.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatManagement.API/Controllers/ChatsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatManagement.API/Controllers/ChatsController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ChatManagement.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatManagement.API/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ChatManagement.API/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ChatManagement.API/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatManagement.Infrastructure/ChatManagement.Infrastructure.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ChatManagement.Infrastructure/ChatManagement.Infrastructure.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatManagement.DataAccess/ChatManagement.DataAccess.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ChatManagement.DataAccess/ChatManagement.DataAccess.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatManagement.DataAccess/Configurations/ChatConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatManagement.DataAccess/Configurations/ChatConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatManagement.DataAccess/Repositories/ChatRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatManagement.DataAccess/Repositories/ChatRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatManagement.DataAccess/Repositories/Repository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatManagement.DataAccess/Repositories/Repository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatManagement.Domain/ChatManagement.Domain.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ChatManagement.Domain/ChatManagement.Domain.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatManagement.Domain/Models/Chat.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatManagement.Domain/Models/Chat.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatManagement.Domain/Models/ChatRequests/AddChatRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatManagement.Domain/Models/ChatRequests/AddChatRequest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatManagement.Domain/Models/ChatRequests/AddUserToChatRequset.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatManagement.Domain/Models/ChatRequests/AttachUserRequset.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatManagement.Domain/Models/ChatRequests/UpdateChatRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatManagement.Domain/Models/ChatRequests/UpdateChatRequest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatManagement.Domain/Models/Dtos/ChatDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatManagement.Domain/Models/Dtos/ChatDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatManagement.Domain/Repositories/IChatRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatManagement.Domain/Repositories/IChatRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatManagement.Domain/Services/IChatService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatManagement.Domain/Services/IChatService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatManagement.Infrastructure/MappingExtensions/ChatMappingExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatManagement.Infrastructure/MappingExtensions/ChatMappingExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatManagement.Services/Services/ChatService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatManagement.Services/Services/ChatService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +37,10 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/d0d6fed6c0eedd962ddc0f68554682064e9e11ca/src/libraries/System.Console/src/System/Console.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/d0d6fed6c0eedd962ddc0f68554682064e9e11ca/src/libraries/System.Private.CoreLib/src/System/Object.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo"><![CDATA[{
   "associatedIndex": 8
@@ -34,6 +52,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    ".NET Launch Settings Profile.ChatManagement.API: http.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "chat-management-dev",
@@ -132,7 +151,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1724343981838</updated>
-      <workItem from="1724343983046" duration="2127000" />
+      <workItem from="1724343983046" duration="13452000" />
     </task>
     <servers />
   </component>
@@ -141,5 +160,210 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ChatManagement.API/Controllers/ChatsController.cs</url>
+          <line>22</line>
+          <properties documentPath="D:\Тарас\Курси\Own Ideas\ChatApp\Chat-App-Dot-Net-Angular-MongoDb-MSSQL\ChatManagement.API\ChatManagement.API\Controllers\ChatsController.cs" initialLine="22" containingFunctionPresentation="Method 'GetChats'">
+            <startOffsets>
+              <option value="577" />
+            </startOffsets>
+            <endOffsets>
+              <option value="627" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ChatManagement.Services/Services/ChatService.cs</url>
+          <line>56</line>
+          <properties documentPath="D:\Тарас\Курси\Own Ideas\ChatApp\Chat-App-Dot-Net-Angular-MongoDb-MSSQL\ChatManagement.API\ChatManagement.Services\Services\ChatService.cs" initialLine="48" containingFunctionPresentation="Method 'GetAllChatsAsync'">
+            <startOffsets>
+              <option value="1775" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1776" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ChatManagement.Services/Services/ChatService.cs</url>
+          <line>55</line>
+          <properties documentPath="D:\Тарас\Курси\Own Ideas\ChatApp\Chat-App-Dot-Net-Angular-MongoDb-MSSQL\ChatManagement.API\ChatManagement.Services\Services\ChatService.cs" initialLine="49" containingFunctionPresentation="Method 'GetAllChatsAsync'">
+            <startOffsets>
+              <option value="1741" />
+              <option value="1759" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1770" />
+              <option value="1768" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ChatManagement.DataAccess/Repositories/Repository.cs</url>
+          <line>36</line>
+          <properties documentPath="D:\Тарас\Курси\Own Ideas\ChatApp\Chat-App-Dot-Net-Angular-MongoDb-MSSQL\ChatManagement.API\ChatManagement.DataAccess\Repositories\Repository.cs" initialLine="27" containingFunctionPresentation="Method 'GetAllAsync'">
+            <startOffsets>
+              <option value="964" />
+            </startOffsets>
+            <endOffsets>
+              <option value="965" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ChatManagement.API/Controllers/ChatsController.cs</url>
+          <line>29</line>
+          <properties documentPath="D:\Тарас\Курси\Own Ideas\ChatApp\Chat-App-Dot-Net-Angular-MongoDb-MSSQL\ChatManagement.API\ChatManagement.API\Controllers\ChatsController.cs" initialLine="29" containingFunctionPresentation="Method 'GetChat'">
+            <startOffsets>
+              <option value="755" />
+            </startOffsets>
+            <endOffsets>
+              <option value="806" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ChatManagement.Services/Services/ChatService.cs</url>
+          <line>61</line>
+          <properties documentPath="D:\Тарас\Курси\Own Ideas\ChatApp\Chat-App-Dot-Net-Angular-MongoDb-MSSQL\ChatManagement.API\ChatManagement.Services\Services\ChatService.cs" initialLine="55" containingFunctionPresentation="Method 'GetChatByIdAsync'">
+            <startOffsets>
+              <option value="1917" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1937" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ChatManagement.DataAccess/Repositories/Repository.cs</url>
+          <line>32</line>
+          <properties documentPath="D:\Тарас\Курси\Own Ideas\ChatApp\Chat-App-Dot-Net-Angular-MongoDb-MSSQL\ChatManagement.API\ChatManagement.DataAccess\Repositories\Repository.cs" initialLine="32" containingFunctionPresentation="Method 'GetAllAsync'">
+            <startOffsets>
+              <option value="900" />
+            </startOffsets>
+            <endOffsets>
+              <option value="921" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ChatManagement.DataAccess/Repositories/Repository.cs</url>
+          <line>33</line>
+          <properties documentPath="D:\Тарас\Курси\Own Ideas\ChatApp\Chat-App-Dot-Net-Angular-MongoDb-MSSQL\ChatManagement.API\ChatManagement.DataAccess\Repositories\Repository.cs" initialLine="33" containingFunctionPresentation="Method 'GetAllAsync'">
+            <startOffsets>
+              <option value="934" />
+            </startOffsets>
+            <endOffsets>
+              <option value="940" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ChatManagement.API/Controllers/ChatsController.cs</url>
+          <line>38</line>
+          <properties documentPath="D:\Тарас\Курси\Own Ideas\ChatApp\Chat-App-Dot-Net-Angular-MongoDb-MSSQL\ChatManagement.API\ChatManagement.API\Controllers\ChatsController.cs" initialLine="38" containingFunctionPresentation="Method 'CreateChat'">
+            <startOffsets>
+              <option value="1040" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1164" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ChatManagement.API/Controllers/ChatsController.cs</url>
+          <line>36</line>
+          <properties documentPath="D:\Тарас\Курси\Own Ideas\ChatApp\Chat-App-Dot-Net-Angular-MongoDb-MSSQL\ChatManagement.API\ChatManagement.API\Controllers\ChatsController.cs" initialLine="36" containingFunctionPresentation="Method 'CreateChat'">
+            <startOffsets>
+              <option value="974" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1022" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ChatManagement.Services/Services/ChatService.cs</url>
+          <line>28</line>
+          <properties documentPath="D:\Тарас\Курси\Own Ideas\ChatApp\Chat-App-Dot-Net-Angular-MongoDb-MSSQL\ChatManagement.API\ChatManagement.Services\Services\ChatService.cs" initialLine="26" containingFunctionPresentation="Method 'AddChatAsync'">
+            <startOffsets>
+              <option value="812" />
+            </startOffsets>
+            <endOffsets>
+              <option value="842" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ChatManagement.Services/Services/ChatService.cs</url>
+          <line>29</line>
+          <properties documentPath="D:\Тарас\Курси\Own Ideas\ChatApp\Chat-App-Dot-Net-Angular-MongoDb-MSSQL\ChatManagement.API\ChatManagement.Services\Services\ChatService.cs" initialLine="29" containingFunctionPresentation="Method 'AddChatAsync'">
+            <startOffsets>
+              <option value="857" />
+            </startOffsets>
+            <endOffsets>
+              <option value="889" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ChatManagement.DataAccess/Repositories/Repository.cs</url>
+          <line>16</line>
+          <properties documentPath="D:\Тарас\Курси\Own Ideas\ChatApp\Chat-App-Dot-Net-Angular-MongoDb-MSSQL\ChatManagement.API\ChatManagement.DataAccess\Repositories\Repository.cs" initialLine="16" containingFunctionPresentation="Constructor 'Repository'">
+            <startOffsets>
+              <option value="559" />
+            </startOffsets>
+            <endOffsets>
+              <option value="560" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ChatManagement.DataAccess/Repositories/Repository.cs</url>
+          <line>41</line>
+          <properties documentPath="D:\Тарас\Курси\Own Ideas\ChatApp\Chat-App-Dot-Net-Angular-MongoDb-MSSQL\ChatManagement.API\ChatManagement.DataAccess\Repositories\Repository.cs" initialLine="41" containingFunctionPresentation="Method 'AddAsync'">
+            <startOffsets>
+              <option value="1063" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1064" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ChatManagement.DataAccess/Repositories/ChatRepository.cs</url>
+          <line>101</line>
+          <properties documentPath="D:\Тарас\Курси\Own Ideas\ChatApp\Chat-App-Dot-Net-Angular-MongoDb-MSSQL\ChatManagement.API\ChatManagement.DataAccess\Repositories\ChatRepository.cs" initialLine="101" containingFunctionPresentation="Method 'DetachUserFromChatAsync'">
+            <startOffsets>
+              <option value="2979" />
+              <option value="3040" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3056" />
+              <option value="3054" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

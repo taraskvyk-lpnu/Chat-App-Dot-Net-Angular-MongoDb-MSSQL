@@ -1,5 +1,12 @@
 using ChatManagement.DataAccess;
+using ChatManagement.Domain;
+using ChatManagement.Domain.Models;
+using ChatManagement.Domain.Models.Dtos;
+using ChatManagement.Domain.Repositories;
+using ChatManagement.Domain.Services;
 using ChatManagement.Infrastructure.Middlewares;
+using ChatManagement.Infrastructure.Repositories;
+using ChatManagement.Services.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChatManagement.API;
@@ -13,12 +20,20 @@ public class Program
         // Add services to the container.
         builder.Services.AddAuthorization();
         builder.Services.AddControllers();
-
+        
+        builder.Services.AddDbContext<ChatManagementDbContext>(options => 
+            options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]));
+        
+        builder.Services.AddScoped<IRepository<Chat>, Repository<Chat>>();
+        builder.Services.AddScoped<IChatRepository, ChatRepository>();
+        builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+        builder.Services.AddScoped<IChatService, ChatService>();
+        
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-        builder.Services.AddDbContext<ChatManagementDbContext>(options => 
-            options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]));
+       
+        
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.

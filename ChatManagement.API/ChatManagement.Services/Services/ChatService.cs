@@ -1,5 +1,6 @@
 ﻿using ChatManagement.Domain;
 using ChatManagement.Domain.Models;
+using ChatManagement.Domain.Models.ChatRequests;
 using ChatManagement.Domain.Models.Dtos;
 using ChatManagement.Domain.Services;
 using ChatManagement.Infrastructure.MappingExtensions;
@@ -15,40 +16,58 @@ public class ChatService : IChatService
         _unitOfWork = unitOfWork;
     }
     
-    public Task AddChatAsync(Chat chat)
+    public async Task AddChatAsync(AddChatRequest addChatRequest)
     {
-        var chatDto = chat.ToDto();
-        return _unitOfWork.Chat.AddAsync(chatDto);
+        var chatDto = new ChatDto
+        {
+            CreatorId = addChatRequest.CreatorId,
+            CreatedAt = DateTime.Now,
+            Title = addChatRequest.Title,
+            UserIds = addChatRequest.UserIds ?? new List<Guid>()
+        };
+
+        var chat = chatDto.ToDomain();
+        await _unitOfWork.Chat.AddAsync(chat);
+        await _unitOfWork.CommitAsync();
     }
 
-    public Task UpdateChatAsync(Chat chat)
+    public async Task UpdateChatAsync(UpdateChatRequest updateChatRequest)
     {
-        var chatDto = chat.ToDto();
-        return _unitOfWork.Chat.UpdateChatAsync(chatDto);
+        var chatDto = new ChatDto
+        {
+            Id = updateChatRequest.ChatId,
+            Title = updateChatRequest.Title,
+            UserIds = updateChatRequest.UserIds ?? new List<Guid>()
+        };
+        
+        await _unitOfWork.Chat.UpdateChatAsync(chatDto, updateChatRequest.UserId);
+        await _unitOfWork.CommitAsync();
     }
 
-    public Task RemoveChatAsync(Chat chat)
+    public async Task RemoveChatAsync(DeleteChatRequest deleteChatRequest)
     {
-        return _unitOfWork.Chat.RemoveByIdAsync(chat.Id);
+        await _unitOfWork.Chat.DeleteChatAsync(deleteChatRequest.ChatId, deleteChatRequest.UserId);
+        await _unitOfWork.CommitAsync();
     }
 
     public async Task<IEnumerable<ChatDto>> GetAllChatsAsync()
     {
-        return await _unitOfWork.Chat.GetAllAsync();
+        var chats = await _unitOfWork.Chat.GetAllAsync();
+        return chats.Select(c => c.ToDto());
     }
 
     public async Task<ChatDto> GetChatByIdAsync(Guid chatId)
     {
-        return await _unitOfWork.Chat.GetByIdAsync(chatId);
+        var chat = await _unitOfWork.Chat.GetByIdAsync(chatId);
+        return chat.ToDto();
     }
 
-    public async Task AttachUserToChatAsync(Guid chatId, Guid userId)
+    public async Task AttachUserToChatAsync(AttachUserRequest addUserToChatRequest)
     {
-        await _unitOfWork.Chat.AttachUserToChatAsync(chatId, userId);
+        await _unitOfWork.Chat.AttachUserToChatAsync(addUserToChatRequest.ChatId, addUserToChatRequest.UserToAddId);
     }
-
-    public async Task DetachUserFromChatAsync(Guid chatId, Guid userId)
+    public async Task DetachUserFromChatAsync(DetachUserRequset detachUserRequest)
     {
-        await _unitOfWork.Chat.AttachUserToChatAsync(chatId, userId);
+        await _unitOfWork.Chat.DetachUserFromChatAsync(detachUserRequest.ChatId, detachUserRequest.UserToDetachId);
     }
 }
