@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using ChatManagement.Infrastructure.CustomException;
 using ChatManagement.Infrastructure.ResponseDtos;
 using Microsoft.AspNetCore.Http;
 
@@ -19,17 +20,27 @@ public class GlobalExceptionHandler
         {
             await _next(context);
         }
+        catch (ApiException apiEx)
+        {
+            context.Response.StatusCode = apiEx.StatusCode;
+            await WriteResponse(context, apiEx.Message);
+        }
         catch (Exception ex)
         {
             context.Response.StatusCode = 500;
-            context.Response.ContentType = "application/json";
-            var responseDto = new ResponseDto
-            {
-                IsSuccess = false,
-                Message = ex.Message
-            };
-            var jsonResponse = JsonSerializer.Serialize(responseDto);
-            await context.Response.WriteAsync(jsonResponse);
+            await WriteResponse(context, "An unexpected error has occurred.");
         }
+    }
+
+    private static async Task WriteResponse(HttpContext context, string message)
+    {
+        context.Response.ContentType = "application/json";
+        var responseDto = new ResponseDto
+        {
+            IsSuccess = false,
+            Message = message
+        };
+        var jsonResponse = JsonSerializer.Serialize(responseDto);
+        await context.Response.WriteAsync(jsonResponse);
     }
 }
