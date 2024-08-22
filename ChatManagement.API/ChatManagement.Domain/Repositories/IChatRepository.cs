@@ -3,7 +3,7 @@ using ChatManagement.Domain.Models.Dtos;
 
 namespace ChatManagement.Domain.Repositories;
 
-public interface IChatRepository : IRepository<Chat>
+public interface IChatRepository : IRepository<ChatDto>
 {
     Task AttachUserToChatAsync(Guid chatId, Guid userId);
     Task DetachUserFromChatAsync(Guid chatId, Guid userId);

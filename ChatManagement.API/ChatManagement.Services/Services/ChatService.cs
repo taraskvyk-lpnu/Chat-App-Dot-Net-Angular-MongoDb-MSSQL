@@ -1,6 +1,8 @@
 ﻿using ChatManagement.Domain;
 using ChatManagement.Domain.Models;
+using ChatManagement.Domain.Models.Dtos;
 using ChatManagement.Domain.Services;
+using ChatManagement.Infrastructure.MappingExtensions;
 
 namespace ChatManagement.Services.Services;
 
@@ -15,36 +17,38 @@ public class ChatService : IChatService
     
     public Task AddChatAsync(Chat chat)
     {
-        throw new NotImplementedException();
+        var chatDto = chat.ToDto();
+        return _unitOfWork.Chat.AddAsync(chatDto);
     }
 
     public Task UpdateChatAsync(Chat chat)
     {
-        throw new NotImplementedException();
+        var chatDto = chat.ToDto();
+        return _unitOfWork.Chat.UpdateChatAsync(chatDto);
     }
 
     public Task RemoveChatAsync(Chat chat)
     {
-        throw new NotImplementedException();
+        return _unitOfWork.Chat.RemoveByIdAsync(chat.Id);
     }
 
-    public Task<IEnumerable<Chat>> GetAllChatsAsync()
+    public async Task<IEnumerable<ChatDto>> GetAllChatsAsync()
     {
-        throw new NotImplementedException();
+        return await _unitOfWork.Chat.GetAllAsync();
     }
 
-    public Task<Chat> GetChatByIdAsync(string chatId)
+    public async Task<ChatDto> GetChatByIdAsync(Guid chatId)
     {
-        throw new NotImplementedException();
+        return await _unitOfWork.Chat.GetByIdAsync(chatId);
     }
 
-    public Task AttachUserToChatAsync(string chatId, string userId)
+    public async Task AttachUserToChatAsync(Guid chatId, Guid userId)
     {
-        throw new NotImplementedException();
+        await _unitOfWork.Chat.AttachUserToChatAsync(chatId, userId);
     }
 
-    public Task DetachUserFromChatAsync(string chatId, string userId)
+    public async Task DetachUserFromChatAsync(Guid chatId, Guid userId)
     {
-        throw new NotImplementedException();
+        await _unitOfWork.Chat.AttachUserToChatAsync(chatId, userId);
     }
 }

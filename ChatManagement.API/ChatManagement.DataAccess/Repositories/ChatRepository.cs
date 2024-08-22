@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ChatManagement.Infrastructure.Repositories;
 
-public class ChatRepository : Repository<Chat>, IChatRepository
+public class ChatRepository : Repository<ChatDto>, IChatRepository
 {
     public ChatRepository(ChatManagementDbContext chatContext) : base(chatContext)
     {
