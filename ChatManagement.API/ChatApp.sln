@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatManagement.API", "ChatM
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chat.Management.API", "Chat.Management.API", "{4DFC49EC-C6A0-4029-8BC8-8F1B7DAA287B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatManagement.Domain", "ChatManagement.Domain\ChatManagement.Domain.csproj", "{19522DE2-94B8-48E6-9BD1-F1D677A0570D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,8 +16,13 @@ Global
 		{1FE9935D-F8E8-4D9C-8D35-73E13A9057E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1FE9935D-F8E8-4D9C-8D35-73E13A9057E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1FE9935D-F8E8-4D9C-8D35-73E13A9057E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19522DE2-94B8-48E6-9BD1-F1D677A0570D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19522DE2-94B8-48E6-9BD1-F1D677A0570D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19522DE2-94B8-48E6-9BD1-F1D677A0570D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19522DE2-94B8-48E6-9BD1-F1D677A0570D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{1FE9935D-F8E8-4D9C-8D35-73E13A9057E9} = {4DFC49EC-C6A0-4029-8BC8-8F1B7DAA287B}
+		{19522DE2-94B8-48E6-9BD1-F1D677A0570D} = {4DFC49EC-C6A0-4029-8BC8-8F1B7DAA287B}
 	EndGlobalSection
 EndGlobal
