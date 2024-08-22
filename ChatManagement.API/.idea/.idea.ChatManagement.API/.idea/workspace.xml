@@ -10,9 +10,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e222e803-da46-49a8-95dd-4db5676f60de" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/ChatManagement.API.sln" beforeDir="false" afterPath="$PROJECT_DIR$/ChatManagement.API.sln" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatManagement.Infrastructure/ResponseDto/ResponseDto.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ChatManagement.API/ChatManagement.API.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ChatManagement.API/ChatManagement.API.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ChatManagement.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatManagement.API/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatManagement.API/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ChatManagement.API/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatManagement.Infrastructure/ChatManagement.Infrastructure.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ChatManagement.Infrastructure/ChatManagement.Infrastructure.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,7 +132,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1724343981838</updated>
-      <workItem from="1724343983046" duration="309000" />
+      <workItem from="1724343983046" duration="2127000" />
     </task>
     <servers />
   </component>

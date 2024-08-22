@@ -20,4 +20,9 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\ChatManagement.DataAccess\ChatManagement.DataAccess.csproj" />
+      <ProjectReference Include="..\ChatManagement.Infrastructure\ChatManagement.Infrastructure.csproj" />
+    </ItemGroup>
+
 </Project>

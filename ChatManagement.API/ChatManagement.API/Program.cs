@@ -1,3 +1,5 @@
+using ChatManagement.DataAccess;
+using ChatManagement.Infrastructure.Middlewares;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChatManagement.API;
@@ -15,8 +17,8 @@ public class Program
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-        /*builder.Services.AddDbContext<AppDbContext>(options => 
-            options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]));*/
+        builder.Services.AddDbContext<ChatManagementDbContext>(options => 
+            options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]));
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
@@ -29,7 +31,7 @@ public class Program
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
-        //app.UseMiddleware<ExceptionHandler>();
+        app.UseMiddleware<GlobalExceptionHandler>();
 
         app.MapControllers();
         
@@ -41,11 +43,11 @@ public class Program
     public static void ApplyMigrations(WebApplication app)
     {
         using var scope = app.Services.CreateScope();
-        /*using var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        using var context = scope.ServiceProvider.GetRequiredService<ChatManagementDbContext>();
 
         if (context.Database.GetPendingMigrations().Any())
         {
             context.Database.Migrate();
-        }*/
+        }
     }
 }
