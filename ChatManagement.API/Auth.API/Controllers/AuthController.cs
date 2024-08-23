@@ -1,5 +1,6 @@
 ﻿using Auth.API.Models.Dto;
 using Auth.API.Service.IService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Auth.API.Controllers

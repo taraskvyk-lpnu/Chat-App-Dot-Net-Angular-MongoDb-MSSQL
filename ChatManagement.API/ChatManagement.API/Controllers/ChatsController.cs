@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ChatManagement.API.Controllers;
 
-[ApiController]
 [Authorize]
+[ApiController]
 [Route("api/[controller]")]
 public class ChatsController : ControllerBase
 {
@@ -20,6 +20,7 @@ public class ChatsController : ControllerBase
     }
     
     [HttpGet]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetChats()
     {
         var chats = await _chatService.GetAllChatsAsync();

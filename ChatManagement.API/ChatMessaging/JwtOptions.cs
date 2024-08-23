@@ -7,5 +7,6 @@
         public string Audience { get; set; } = string.Empty;
 
         public string Secret { get; set; } = string.Empty;
+        public string ExpirationHours { get; set; } = string.Empty;
     }
 }

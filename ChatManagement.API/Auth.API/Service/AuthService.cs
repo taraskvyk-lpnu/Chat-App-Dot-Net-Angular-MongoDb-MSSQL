@@ -22,12 +22,17 @@ namespace Auth.API.Service
         public async Task<bool> AssignRole(string email, string roleName)
         {
             var user = await _userManager.FindByEmailAsync(email);
+            
             if (user == null)
                 return false;
 
+            if (string.IsNullOrEmpty(roleName))
+                roleName = "User";
+            
             if (!await _roleManager.RoleExistsAsync(roleName))
             {
                 var roleResult = await _roleManager.CreateAsync(new IdentityRole(roleName));
+                
                 if (!roleResult.Succeeded)
                     return false;
             }
@@ -66,22 +71,22 @@ namespace Auth.API.Service
             };
         }
 
-        public async Task<ResponseDto> Register(RegistrationRequestDto registrationRequestDto)
+        public async Task<ResponseDto> Register(RegistrationRequestDto registerRequestDto)
         {
             var user = new ApplicationUser
             {
-                UserName = registrationRequestDto.Email,
-                Email = registrationRequestDto.Email,
-                NormalizedEmail = registrationRequestDto.Email.ToUpper(),
-                Name = registrationRequestDto.Name,
-                PhoneNumber = registrationRequestDto.PhoneNumber
+                UserName = registerRequestDto.Email,
+                Email = registerRequestDto.Email,
+                NormalizedEmail = registerRequestDto.Email.ToUpper(),
+                Name = registerRequestDto.Name,
+                PhoneNumber = registerRequestDto.PhoneNumber
             };
 
-            var result = await _userManager.CreateAsync(user, registrationRequestDto.Password);
+            var result = await _userManager.CreateAsync(user, registerRequestDto.Password);
 
             if (result.Succeeded)
             {
-                var userToReturn = await _userManager.FindByNameAsync(registrationRequestDto.Email);
+                var userToReturn = await _userManager.FindByNameAsync(registerRequestDto.Email);
                 var token = await GenerateToken(userToReturn!);
 
                 var userDto = new UserDto
@@ -92,6 +97,8 @@ namespace Auth.API.Service
                     PhoneNumber = userToReturn.PhoneNumber
                 };
 
+                await AssignRole(registerRequestDto.Email, registerRequestDto.Role ?? "User");
+                
                 return new ResponseDto
                 {
                     IsSuccess = true,
