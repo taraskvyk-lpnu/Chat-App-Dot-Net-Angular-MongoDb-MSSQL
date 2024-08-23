@@ -22,8 +22,16 @@ public class MongoChatRepository : IChatRepository
 
     public async Task SaveMessageAsync(Guid chatId, Message message)
     {
-        var collection = GetMessageCollection(chatId);
-        await collection.InsertOneAsync(message);
+        try
+        {
+            var collection = GetMessageCollection(chatId);
+            await collection.InsertOneAsync(message);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
     
     private IMongoCollection<Message> GetMessageCollection(Guid chatId)

@@ -16,18 +16,19 @@ namespace ChatMessaging
         public async Task JoinChat(Guid chatId)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, chatId.ToString());
+            await LoadMessages(chatId);
         }
 
-        public async Task SendMessage(Message message, Guid chatId)
+        public async Task SendMessage(Guid chatId, Message message)
         {
             await _chatRepository.SaveMessageAsync(chatId, message);
-            await Clients.Group(chatId.ToString()).SendAsync("ReceiveMessage", message.UserName, message);
+            await Clients.Group(chatId.ToString()).SendAsync("ReceiveMessage", chatId, message);
         }
 
         public async Task LoadMessages(Guid chatId)
         {
             var messages = await _chatRepository.GetMessagesAsync(chatId);
-            await Clients.Caller.SendAsync("ReceiveMessages", messages);
+            await Clients.Caller.SendAsync("ReceiveMessages", chatId, messages);
         }
 
         public async Task LeaveChat(Guid chatId)

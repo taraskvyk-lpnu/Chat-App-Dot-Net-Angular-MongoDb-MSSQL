@@ -12,6 +12,7 @@ public class Program
         // Add services to the container.
         builder.Services.AddAuthorization();
         builder.Services.AddSingleton<IChatRepository, MongoChatRepository>();
+        builder.Services.AddSignalR();
 
         builder.Services.AddEndpointsApiExplorer();
         
@@ -20,6 +21,12 @@ public class Program
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
+        app.UseRouting();
+        
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapHub<ChatHub>("/chathub");
+        });
         app.Run();
     }
 }
