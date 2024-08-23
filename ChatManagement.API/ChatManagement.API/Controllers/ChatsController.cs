@@ -20,7 +20,7 @@ public class ChatsController : ControllerBase
     }
     
     [HttpGet]
-    [Authorize(Roles = "Admin")]
+    [Authorize("RequireAdminRole")]
     public async Task<IActionResult> GetChats()
     {
         var chats = await _chatService.GetAllChatsAsync();

@@ -28,6 +28,11 @@ public class Program
         var jwtOptions = builder.Configuration.GetSection("ApiSettings:JwtOptions").Get<JwtOptions>();
         builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("ApiSettings:JwtOptions"));
 
+        builder.Services.AddAuthorization(options =>
+        {
+            options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
+        });
+        
         builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -49,6 +54,7 @@ public class Program
         
         builder.Services.AddDbContext<ChatManagementDbContext>(options => 
             options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]));
+
         
         builder.Services.AddScoped<IRepository<Chat>, Repository<Chat>>();
         builder.Services.AddScoped<IChatRepository, ChatRepository>();
