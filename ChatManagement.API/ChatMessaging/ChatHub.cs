@@ -1,9 +1,11 @@
 ﻿using ChatMessaging.Contracts;
 using ChatMessaging.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 
 namespace ChatMessaging
 {
+    [Authorize]
     public class ChatHub : Hub
     {
         private readonly IChatRepository _chatRepository;

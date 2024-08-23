@@ -2,11 +2,13 @@
 using ChatManagement.Domain.Models.Dtos;
 using ChatManagement.Domain.Services;
 using ChatManagement.Infrastructure.ResponseDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChatManagement.API.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class ChatsController : ControllerBase
 {
