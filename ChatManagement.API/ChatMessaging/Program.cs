@@ -1,3 +1,6 @@
+using ChatMessaging.Contracts;
+using ChatMessaging.Implementations;
+
 namespace ChatMessaging;
 
 public class Program
@@ -8,8 +11,9 @@ public class Program
 
         // Add services to the container.
         builder.Services.AddAuthorization();
+        builder.Services.AddSingleton<IChatRepository, MongoChatRepository>();
+        builder.Services.AddSignalR();
 
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         
         var app = builder.Build();
@@ -17,6 +21,12 @@ public class Program
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
+        app.UseRouting();
+        
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapHub<ChatHub>("/chathub");
+        });
         app.Run();
     }
 }
