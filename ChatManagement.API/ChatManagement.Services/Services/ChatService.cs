@@ -44,9 +44,9 @@ public class ChatService : IChatService
         await _unitOfWork.CommitAsync();
     }
 
-    public async Task RemoveChatAsync(DeleteChatRequest deleteChatRequest)
+    public async Task RemoveChatAsync(RemoveChatRequest deleteChatRequest)
     {
-        await _unitOfWork.Chat.DeleteChatAsync(deleteChatRequest.ChatId, deleteChatRequest.UserId);
+        await _unitOfWork.Chat.RemoveChatAsync(deleteChatRequest.ChatId, deleteChatRequest.UserId);
         await _unitOfWork.CommitAsync();
     }
 

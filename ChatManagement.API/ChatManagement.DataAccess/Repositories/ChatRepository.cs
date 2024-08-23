@@ -61,7 +61,7 @@ public class ChatRepository : Repository<Chat>, IChatRepository
         await _chatContext.SaveChangesAsync();
     }
     
-    public async Task DeleteChatAsync(Guid chatId, Guid userId)
+    public async Task RemoveChatAsync(Guid chatId, Guid userId)
     {
         var chat = await _chatContext.Chats.FirstOrDefaultAsync(c => c.Id == chatId);
 

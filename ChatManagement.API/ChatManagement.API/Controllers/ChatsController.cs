@@ -56,9 +56,9 @@ public class ChatsController : ControllerBase
     }
     
     [HttpDelete("{id}")]
-    public async Task<ActionResult<ResponseDto>> RemoveChat(DeleteChatRequest deleteChatRequest)
+    public async Task<ActionResult<ResponseDto>> RemoveChat(RemoveChatRequest removeChatRequest)
     {
-        await _chatService.RemoveChatAsync(deleteChatRequest);
+        await _chatService.RemoveChatAsync(removeChatRequest);
         
         return new ResponseDto
         {

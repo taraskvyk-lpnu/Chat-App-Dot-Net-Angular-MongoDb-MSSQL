@@ -8,7 +8,7 @@ public interface IChatService
 {
     Task AddChatAsync(AddChatRequest addChatRequest);
     Task UpdateChatAsync(UpdateChatRequest updateChatRequest);
-    Task RemoveChatAsync(DeleteChatRequest deleteChatRequest);
+    Task RemoveChatAsync(RemoveChatRequest deleteChatRequest);
     Task<IEnumerable<ChatDto>> GetAllChatsAsync();
     Task<ChatDto> GetChatByIdAsync(Guid chatId);
     
