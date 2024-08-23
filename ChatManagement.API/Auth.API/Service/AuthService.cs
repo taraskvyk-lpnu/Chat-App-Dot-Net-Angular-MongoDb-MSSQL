@@ -11,7 +11,7 @@ namespace Auth.API.Service
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
 
-        public AuthService(JwtTokenGenerator jwtTokenGenerator,
+        public AuthService(IJwtTokenGenerator jwtTokenGenerator,
             UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _jwtTokenGenerator = jwtTokenGenerator;
@@ -38,7 +38,7 @@ namespace Auth.API.Service
         
         public async Task<ResponseDto> Login(LoginRequestDto loginRequestDto)
         {
-            var user = await _userManager.FindByNameAsync(loginRequestDto.UserName);
+            var user = await _userManager.FindByEmailAsync(loginRequestDto.Email);
             
             if (user == null || !await _userManager.CheckPasswordAsync(user, loginRequestDto.Password))
             {
@@ -100,10 +100,13 @@ namespace Auth.API.Service
                 };
             }
 
+            var errorMessages = string.Join(";", result.Errors.Select(e => e.Description));
+
             return new ResponseDto
             {
+                IsSuccess = false,
                 Token = "",
-                Message = result.Errors.FirstOrDefault()?.Description ?? "Unknown error occurred"
+                Message = errorMessages
             };
         }
 

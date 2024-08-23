@@ -9,8 +9,6 @@ namespace Auth.API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
-        private readonly ResponseDto _response;
-        
         public AuthController(IAuthService authService)
         {
             _authService = authService;
@@ -23,7 +21,7 @@ namespace Auth.API.Controllers
 
             if (!registerResponse.IsSuccess)
             {
-                return BadRequest(_response);
+                return BadRequest(registerResponse);
             }
             
             return Ok(registerResponse);
@@ -36,7 +34,7 @@ namespace Auth.API.Controllers
            
             if (!loginResponse.IsSuccess)
             {
-                return BadRequest(_response);
+                return BadRequest(loginResponse);
             }
             
             return Ok(loginResponse);
@@ -46,15 +44,16 @@ namespace Auth.API.Controllers
         public async Task<IActionResult> AssignRole([FromBody] RegistrationRequestDto model)
         {
             var assignRoleSuccessful = await _authService.AssignRole(model.Email, model.Role.ToUpper());
-           
+            var response = new ResponseDto();
+            
             if (!assignRoleSuccessful)
             {
-                _response.IsSuccess = false;
-                _response.Message = "Error encountered";
-                return BadRequest(_response);
+                response.IsSuccess = false;
+                response.Message = "Error encountered";
+                return BadRequest(response);
             }
             
-            return Ok(_response);
+            return Ok(response);
         }
     }
 }
