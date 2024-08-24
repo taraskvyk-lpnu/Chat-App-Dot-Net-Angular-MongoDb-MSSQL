@@ -16,9 +16,9 @@ namespace Auth.API.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegistrationRequestDto model)
+        public async Task<IActionResult> Register([FromBody] RegisterRequestDto model)
         {
-            var registerResponse = await _authService.Register(model);
+            var registerResponse = await _authService.RegisterAsync(model);
 
             if (!registerResponse.IsSuccess)
             {
@@ -31,7 +31,7 @@ namespace Auth.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest model)
         {
-            var loginResponse = await _authService.Login(model);
+            var loginResponse = await _authService.LoginAsync(model);
            
             if (!loginResponse.IsSuccess)
             {
@@ -44,7 +44,7 @@ namespace Auth.API.Controllers
         [HttpPost("AssignRole")]
         public async Task<IActionResult> AssignRole([FromBody] AssignRoleRequest roleRequest)
         {
-            var assignRoleSuccessful = await _authService.AssignRole(roleRequest.Email, roleRequest.Role);
+            var assignRoleSuccessful = await _authService.AssignRoleAsync(roleRequest.Email, roleRequest.Role);
             var response = new ResponseDto();
             
             if (!assignRoleSuccessful)

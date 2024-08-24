@@ -4,8 +4,8 @@ namespace Auth.API.Service.IService
 {
     public interface IAuthService
     {
-        Task<ResponseDto> Register(RegistrationRequestDto registrationRequestDto);
-        Task<ResponseDto> Login(LoginRequest loginRequest);
-        Task<bool> AssignRole(string email, string roleName);
+        Task<ResponseDto> RegisterAsync(RegisterRequestDto registrationRequestDto);
+        Task<ResponseDto> LoginAsync(LoginRequest loginRequest);
+        Task<bool> AssignRoleAsync(string email, string roleName);
     }
 }

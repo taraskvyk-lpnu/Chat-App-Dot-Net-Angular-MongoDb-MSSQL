@@ -19,29 +19,26 @@ namespace Auth.API.Service
             _roleManager = roleManager;
         }
 
-        public async Task<bool> AssignRole(string email, string roleName)
+        public async Task<bool> AssignRoleAsync(string email, string roleName)
         {
             var user = await _userManager.FindByEmailAsync(email);
             
             if (user == null)
                 return false;
-
-            if (string.IsNullOrEmpty(roleName))
-                roleName = "User";
             
             if (!await _roleManager.RoleExistsAsync(roleName))
             {
-                var roleResult = await _roleManager.CreateAsync(new IdentityRole(roleName));
-                
-                if (!roleResult.Succeeded)
-                    return false;
+                throw new InvalidOperationException("Role does not exist");
             }
+            
+            if(await _userManager.IsInRoleAsync(user, roleName))
+                throw new InvalidOperationException("User already has the role");
 
             var addToRoleResult = await _userManager.AddToRoleAsync(user, roleName);
             return addToRoleResult.Succeeded;
         }
         
-        public async Task<ResponseDto> Login(LoginRequest loginRequest)
+        public async Task<ResponseDto> LoginAsync(LoginRequest loginRequest)
         {
             var user = await _userManager.FindByEmailAsync(loginRequest.Email);
             
@@ -66,12 +63,13 @@ namespace Auth.API.Service
 
             return new ResponseDto
             {
+                IsSuccess = true,
                 User = userDto, 
                 Token = token
             };
         }
 
-        public async Task<ResponseDto> Register(RegistrationRequestDto registerRequestDto)
+        public async Task<ResponseDto> RegisterAsync(RegisterRequestDto registerRequestDto)
         {
             var user = new ApplicationUser
             {
@@ -86,7 +84,7 @@ namespace Auth.API.Service
 
             if (result.Succeeded)
             {
-                var userToReturn = await _userManager.FindByNameAsync(registerRequestDto.Email);
+                var userToReturn = await _userManager.FindByEmailAsync(registerRequestDto.Email);
                 var token = await GenerateToken(userToReturn!);
 
                 var userDto = new UserDto
@@ -97,7 +95,7 @@ namespace Auth.API.Service
                     PhoneNumber = userToReturn.PhoneNumber
                 };
 
-                await AssignRole(registerRequestDto.Email, registerRequestDto.Role ?? "User");
+                await AssignRoleAsync(registerRequestDto.Email, registerRequestDto.Role ?? "User");
                 
                 return new ResponseDto
                 {
@@ -107,7 +105,7 @@ namespace Auth.API.Service
                 };
             }
 
-            var errorMessages = string.Join(";", result.Errors.Select(e => e.Description));
+            var errorMessages = string.Join(";", result.ToString(), result.Errors.Select(e => e.Description));
 
             return new ResponseDto
             {
