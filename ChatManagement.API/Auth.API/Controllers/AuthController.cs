@@ -29,7 +29,7 @@ namespace Auth.API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginRequestDto model)
+        public async Task<IActionResult> Login([FromBody] LoginRequest model)
         {
             var loginResponse = await _authService.Login(model);
            
@@ -42,9 +42,9 @@ namespace Auth.API.Controllers
         }
 
         [HttpPost("AssignRole")]
-        public async Task<IActionResult> AssignRole([FromBody] RegistrationRequestDto model)
+        public async Task<IActionResult> AssignRole([FromBody] AssignRoleRequest roleRequest)
         {
-            var assignRoleSuccessful = await _authService.AssignRole(model.Email, model.Role.ToUpper());
+            var assignRoleSuccessful = await _authService.AssignRole(roleRequest.Email, roleRequest.Role);
             var response = new ResponseDto();
             
             if (!assignRoleSuccessful)

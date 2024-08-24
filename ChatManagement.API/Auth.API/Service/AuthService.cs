@@ -41,11 +41,11 @@ namespace Auth.API.Service
             return addToRoleResult.Succeeded;
         }
         
-        public async Task<ResponseDto> Login(LoginRequestDto loginRequestDto)
+        public async Task<ResponseDto> Login(LoginRequest loginRequest)
         {
-            var user = await _userManager.FindByEmailAsync(loginRequestDto.Email);
+            var user = await _userManager.FindByEmailAsync(loginRequest.Email);
             
-            if (user == null || !await _userManager.CheckPasswordAsync(user, loginRequestDto.Password))
+            if (user == null || !await _userManager.CheckPasswordAsync(user, loginRequest.Password))
             {
                 return new ResponseDto
                 {
