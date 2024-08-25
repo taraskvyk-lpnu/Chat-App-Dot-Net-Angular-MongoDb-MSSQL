@@ -4,8 +4,8 @@ using ChatManagement.Domain.Models.Dtos;
 using ChatManagement.Domain.Repositories;
 using ChatManagement.Domain.Services;
 using ChatManagement.Services.Services;
-using ChatDomain = ChatManagement.Domain.Models.Chat;
 using Moq;
+using ChatDomain = ChatManagement.Domain.Models.Chat;
 
 namespace ChatManagement.Services.Tests;
 

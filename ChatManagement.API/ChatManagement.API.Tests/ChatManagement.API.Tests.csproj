@@ -23,9 +23,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ChatManagement.API\ChatManagement.API.csproj" />
-      <ProjectReference Include="..\ChatManagement.DataAccess\ChatManagement.DataAccess.csproj" />
       <ProjectReference Include="..\ChatManagement.Domain\ChatManagement.Domain.csproj" />
-      <ProjectReference Include="..\ChatManagement.Services\ChatManagement.Services.csproj" />
     </ItemGroup>
 
 </Project>
