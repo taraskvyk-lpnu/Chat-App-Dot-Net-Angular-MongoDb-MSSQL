@@ -4,7 +4,7 @@ using ChatManagement.Domain.Models.Dtos;
 
 namespace ChatManagement.Domain.Services;
 
-public interface IChatService
+public interface IChatManagementService
 {
     Task AddChatAsync(AddChatRequest addChatRequest);
     Task UpdateChatAsync(UpdateChatRequest updateChatRequest);

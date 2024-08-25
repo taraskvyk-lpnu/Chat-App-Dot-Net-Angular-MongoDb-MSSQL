@@ -1,5 +1,4 @@
 ﻿using ChatManagement.Domain;
-using ChatManagement.Domain.Models;
 using ChatManagement.Domain.Models.ChatRequests;
 using ChatManagement.Domain.Models.Dtos;
 using ChatManagement.Domain.Services;
@@ -7,11 +6,11 @@ using ChatManagement.Infrastructure.MappingExtensions;
 
 namespace ChatManagement.Services.Services;
 
-public class ChatService : IChatService
+public class ChatManagementService : IChatManagementService
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    public ChatService(IUnitOfWork unitOfWork)
+    public ChatManagementService(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }
@@ -65,9 +64,11 @@ public class ChatService : IChatService
     public async Task AttachUserToChatAsync(AttachUserRequest addUserToChatRequest)
     {
         await _unitOfWork.Chat.AttachUserToChatAsync(addUserToChatRequest.ChatId, addUserToChatRequest.UserToAddId);
+        await _unitOfWork.CommitAsync();
     }
     public async Task DetachUserFromChatAsync(DetachUserRequset detachUserRequest)
     {
         await _unitOfWork.Chat.DetachUserFromChatAsync(detachUserRequest.ChatId, detachUserRequest.UserToDetachId);
+        await _unitOfWork.CommitAsync();
     }
 }

@@ -12,32 +12,32 @@ namespace ChatManagement.API.Controllers;
 [Route("api/[controller]")]
 public class ChatsController : ControllerBase
 {
-    private readonly IChatService _chatService;
+    private readonly IChatManagementService _chatManagementService;
 
-    public ChatsController(IChatService chatService)
+    public ChatsController(IChatManagementService chatManagementService)
     {
-        _chatService = chatService;
+        _chatManagementService = chatManagementService;
     }
     
     [HttpGet]
     [Authorize("RequireAdminRole")]
     public async Task<IActionResult> GetChats()
     {
-        var chats = await _chatService.GetAllChatsAsync();
+        var chats = await _chatManagementService.GetAllChatsAsync();
         return Ok(chats);
     }
     
     [HttpGet("{id}")]
     public async Task<IActionResult> GetChat(Guid id)
     {
-        var chat = await _chatService.GetChatByIdAsync(id);
+        var chat = await _chatManagementService.GetChatByIdAsync(id);
         return Ok(chat);
     }
     
     [HttpPost]
     public async Task<ActionResult<ResponseDto>> CreateChat([FromBody] AddChatRequest addChatRequest)
     {
-        await _chatService.AddChatAsync(addChatRequest);
+        await _chatManagementService.AddChatAsync(addChatRequest);
         
         return new ResponseDto
         {
@@ -49,7 +49,7 @@ public class ChatsController : ControllerBase
     [HttpPut("{id}")]
     public async Task<ActionResult<ResponseDto>> UpdateChat(Guid id, [FromBody] UpdateChatRequest updateChatRequest)
     {
-        await _chatService.UpdateChatAsync(updateChatRequest);
+        await _chatManagementService.UpdateChatAsync(updateChatRequest);
         
         return new ResponseDto
         {
@@ -61,7 +61,7 @@ public class ChatsController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<ActionResult<ResponseDto>> RemoveChat(RemoveChatRequest removeChatRequest)
     {
-        await _chatService.RemoveChatAsync(removeChatRequest);
+        await _chatManagementService.RemoveChatAsync(removeChatRequest);
         
         return new ResponseDto
         {
@@ -73,7 +73,7 @@ public class ChatsController : ControllerBase
     [HttpPost("attach-user")]
     public async Task<ActionResult<ResponseDto>> AttachUserToChat([FromBody] AttachUserRequest attachUserRequest)
     {
-        await _chatService.AttachUserToChatAsync(attachUserRequest);
+        await _chatManagementService.AttachUserToChatAsync(attachUserRequest);
         
         return new ResponseDto
         {
@@ -85,7 +85,7 @@ public class ChatsController : ControllerBase
     [HttpPost("detach-user")]
     public async Task<ActionResult<ResponseDto>> DetachUserFromChat([FromBody] DetachUserRequset detachUserRequest)
     {
-        await _chatService.DetachUserFromChatAsync(detachUserRequest);
+        await _chatManagementService.DetachUserFromChatAsync(detachUserRequest);
         
         return new ResponseDto
         {

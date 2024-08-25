@@ -88,7 +88,7 @@ public class ChatRepository : Repository<Chat>, IChatRepository
             throw new NotFoundException("Chat not found");
         }
         
-        if (chat.UserIds.Contains(chatId))
+        if (chat.UserIds.Contains(userId))
         {
             throw new UserAttachmentException("User already attached to chat");
         }
@@ -111,7 +111,7 @@ public class ChatRepository : Repository<Chat>, IChatRepository
             throw new UserAttachmentException("This user hadn't been attached to chat");
         }
         
-        if(chat.UserIds.Contains(chatId) && chat.CreatorId == userId)
+        if(chat.UserIds.Contains(userId) && chat.CreatorId == userId)
         {
             throw new AccessViolationException("You can't detach yourself from chat");
         }

@@ -10,7 +10,7 @@ using Xunit;
 
 namespace Auth.API.Tests.ServicesTests
 {
-    public class AuthServiceTest : IAuthServiceTest
+    public class AuthServiceTest
     {
         private readonly Mock<UserManager<ApplicationUser>> _userManagerMock;
         private readonly Mock<RoleManager<IdentityRole>> _roleManagerMock;

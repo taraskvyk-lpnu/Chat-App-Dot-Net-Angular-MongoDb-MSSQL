@@ -23,7 +23,6 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
 
     public async Task<IEnumerable<TEntity>> GetAllAsync()
     {
-        int n = _dbSet.Count();
         try
         {
             return await _dbSet.ToListAsync();
@@ -45,11 +44,12 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         var entity = await _dbSet.FindAsync(id);
 
-        if (entity != null)
+        if (entity == null)
         {
             throw new NotFoundException("Entity not found");
         }
         
         _dbSet.Remove(entity);
+        await _chatContext.SaveChangesAsync();
     }
 }

@@ -59,7 +59,7 @@ public class Program
         builder.Services.AddScoped<IRepository<Chat>, Repository<Chat>>();
         builder.Services.AddScoped<IChatRepository, ChatRepository>();
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-        builder.Services.AddScoped<IChatService, ChatService>();
+        builder.Services.AddScoped<IChatManagementService, ChatManagementService>();
         
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
