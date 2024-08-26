@@ -18,7 +18,14 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     
     public async Task<TEntity> GetByIdAsync(Guid id)
     {
-        return await _dbSet.FindAsync(id);
+        var entity = await _dbSet.FindAsync(id);
+        
+        if(entity == null)
+        {
+            throw new NotFoundException("Entity not found");
+        }
+        
+        return entity;
     }
 
     public async Task<IEnumerable<TEntity>> GetAllAsync()
@@ -32,7 +39,6 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
             Console.WriteLine(e);
             throw;
         }
-        
     }
 
     public async Task AddAsync(TEntity entity)

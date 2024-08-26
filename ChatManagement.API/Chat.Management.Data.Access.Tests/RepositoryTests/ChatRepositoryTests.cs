@@ -24,20 +24,20 @@ public class ChatRepositoryTests
     [Fact]
     public async Task AddChatAsync_ChatDoesNotExist_AddsChatSuccessfully()
     {
-        var chatDto = new ChatDto
+        var chat = new ChatDomain
         {
             Title = "Test Chat",
             UserIds = new List<Guid>()
         };
         var userId = Guid.NewGuid();
 
-        await _chatRepository.AddChatAsync(chatDto, userId);
+        await _chatRepository.AddChatAsync(chat, userId);
 
-        var chat = await _dbContext.Chats.FirstOrDefaultAsync(c => c.Title == "Test Chat");
+        var createdChat = await _dbContext.Chats.FirstOrDefaultAsync(c => c.Title == "Test Chat");
         Assert.NotNull(chat);
         
-        Assert.Equal("Test Chat", chat.Title);
-        Assert.Contains(userId, chat.UserIds.ToList());
+        Assert.Equal("Test Chat", createdChat!.Title);
+        Assert.Contains(userId, createdChat.UserIds.ToList());
     }
 
     [Fact]
@@ -55,13 +55,13 @@ public class ChatRepositoryTests
         await _dbContext.Chats.AddAsync(chat);
         await _dbContext.SaveChangesAsync();
 
-        var chatDto = new ChatDto
+        var newChat = new ChatDomain
         {
             Title = "Existing Chat",
             UserIds = new List<Guid>()
         };
 
-        await Assert.ThrowsAsync<ApiException>(() => _chatRepository.AddChatAsync(chatDto, userId));
+        await Assert.ThrowsAsync<ApiException>(() => _chatRepository.AddChatAsync(newChat, userId));
     }
 
     [Fact]
@@ -102,14 +102,14 @@ public class ChatRepositoryTests
         await _dbContext.Chats.AddAsync(chat);
         await _dbContext.SaveChangesAsync();
 
-        var chatDto = new ChatDto
+        var chatToUpdate = new ChatDomain
         {
             Id = chat.Id,
             Title = "Updated Title",
             UserIds = [userId]
         };
 
-        await _chatRepository.UpdateChatAsync(chatDto, userId);
+        await _chatRepository.UpdateChatAsync(chatToUpdate, userId);
 
         var updatedChat = await _dbContext.Chats.FindAsync(chat.Id);
         Assert.Equal("Updated Title", updatedChat!.Title);
@@ -132,14 +132,14 @@ public class ChatRepositoryTests
         await _dbContext.Chats.AddAsync(chat);
         await _dbContext.SaveChangesAsync();
 
-        var chatDto = new ChatDto
+        var chatToUpdate = new ChatDomain
         {
             Id = chat.Id,
             Title = "Updated Title",
             UserIds = [userId]
         };
 
-        await Assert.ThrowsAsync<AccessViolationException>(() => _chatRepository.UpdateChatAsync(chatDto, anotherUserId));
+        await Assert.ThrowsAsync<AccessViolationException>(() => _chatRepository.UpdateChatAsync(chatToUpdate, anotherUserId));
     }
 
     [Fact]

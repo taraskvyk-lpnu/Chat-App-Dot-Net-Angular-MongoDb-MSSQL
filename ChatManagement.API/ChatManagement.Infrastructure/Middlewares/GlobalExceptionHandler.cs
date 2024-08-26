@@ -25,6 +25,11 @@ public class GlobalExceptionHandler
             context.Response.StatusCode = apiEx.StatusCode;
             await WriteResponse(context, apiEx.Message);
         }
+        catch (AccessViolationException apiEx)
+        {
+            context.Response.StatusCode = 500;
+            await WriteResponse(context, apiEx.Message);
+        }
         catch (Exception ex)
         {
             context.Response.StatusCode = 500;
@@ -40,6 +45,7 @@ public class GlobalExceptionHandler
             IsSuccess = false,
             Message = message
         };
+        
         var jsonResponse = JsonSerializer.Serialize(responseDto);
         await context.Response.WriteAsync(jsonResponse);
     }

@@ -1,13 +1,11 @@
 ﻿using ChatManagement.Domain.Models.ChatRequests;
-using ChatManagement.Domain.Models.Dtos;
 using ChatManagement.Domain.Services;
 using ChatManagement.Infrastructure.ResponseDtos;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChatManagement.API.Controllers;
 
-[Authorize]
+//[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class ChatsController : ControllerBase
@@ -20,7 +18,7 @@ public class ChatsController : ControllerBase
     }
     
     [HttpGet]
-    [Authorize("RequireAdminRole")]
+    //[Authorize("RequireAdminRole")]
     public async Task<IActionResult> GetChats()
     {
         var chats = await _chatManagementService.GetAllChatsAsync();
@@ -59,8 +57,14 @@ public class ChatsController : ControllerBase
     }
     
     [HttpDelete("{id}")]
-    public async Task<ActionResult<ResponseDto>> RemoveChat(RemoveChatRequest removeChatRequest)
+    public async Task<ActionResult<ResponseDto>> RemoveChat(Guid id, Guid userId)
     {
+        var removeChatRequest = new RemoveChatRequest
+        {
+            ChatId = id,
+            UserId = userId,
+        };
+            
         await _chatManagementService.RemoveChatAsync(removeChatRequest);
         
         return new ResponseDto

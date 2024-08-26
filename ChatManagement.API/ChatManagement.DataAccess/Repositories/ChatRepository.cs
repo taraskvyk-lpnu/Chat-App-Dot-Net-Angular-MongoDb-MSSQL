@@ -19,45 +19,38 @@ public class ChatRepository : Repository<Chat>, IChatRepository
             .ToListAsync();
     }
     
-    public async Task AddChatAsync(ChatDto chatDto, Guid userId)
+    
+    public async Task AddChatAsync(Chat chat, Guid userId)
     {
-        var chat = await _chatContext.Chats.FirstOrDefaultAsync(c => c.Title == chatDto.Title);
+        var existingChat = await _chatContext.Chats.FirstOrDefaultAsync(c => c.Title == chat.Title);
 
-        if (chat != null)
+        if (existingChat != null)
         {
             throw new ApiException($"Chat \"{chat.Title}\" already exists");
         }
 
-        chatDto.UserIds.Add(userId);
-
-        chat = new Chat
-        {
-            Title = chatDto.Title,
-            UserIds = chatDto.UserIds,
-            CreatorId = userId,
-            CreatedAt = DateTime.Now
-        };
+        chat.UserIds.Add(userId);
         
         await _chatContext.Chats.AddAsync(chat);
         await _chatContext.SaveChangesAsync();
     }
     
-    public async Task UpdateChatAsync(ChatDto chatDto, Guid userId)
+    public async Task UpdateChatAsync(Chat chat, Guid userId)
     {
-        var chat = await _chatContext.Chats.FirstOrDefaultAsync(c => c.Id == chatDto.Id);
+        var existingChat = await _chatContext.Chats.FirstOrDefaultAsync(c => c.Id == chat.Id);
 
-        if (chat == null)
+        if (existingChat == null)
         {
             throw new NotFoundException("Chat does not exist");
         }
         
-        if (chat.CreatorId != userId)
+        if (existingChat.CreatorId != userId)
         {
             throw new AccessViolationException("You can't update this chat");
         }
         
-        chat.Title = chatDto.Title;
-        chat.UserIds = chatDto.UserIds;
+        existingChat.Title = chat.Title;
+        existingChat.UserIds = chat.UserIds;
         await _chatContext.SaveChangesAsync();
     }
     
@@ -82,7 +75,7 @@ public class ChatRepository : Repository<Chat>, IChatRepository
     public async Task AttachUserToChatAsync(Guid chatId, Guid userId)
     {
         var chat = await _chatContext.Chats.FirstOrDefaultAsync(c => c.Id == chatId);
-
+        
         if (chat == null)
         {
             throw new NotFoundException("Chat not found");
@@ -113,7 +106,7 @@ public class ChatRepository : Repository<Chat>, IChatRepository
         
         if(chat.UserIds.Contains(userId) && chat.CreatorId == userId)
         {
-            throw new AccessViolationException("You can't detach yourself from chat");
+            throw new AccessViolationException("You can't detach yourself from the chat");
         }
         
         chat.UserIds.Remove(userId);

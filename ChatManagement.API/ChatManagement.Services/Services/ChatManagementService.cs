@@ -1,4 +1,5 @@
 ﻿using ChatManagement.Domain;
+using ChatManagement.Domain.Models;
 using ChatManagement.Domain.Models.ChatRequests;
 using ChatManagement.Domain.Models.Dtos;
 using ChatManagement.Domain.Services;
@@ -17,7 +18,7 @@ public class ChatManagementService : IChatManagementService
     
     public async Task AddChatAsync(AddChatRequest addChatRequest)
     {
-        var chatDto = new ChatDto
+        var chat = new Chat
         {
             CreatorId = addChatRequest.CreatorId,
             CreatedAt = DateTime.Now,
@@ -25,21 +26,20 @@ public class ChatManagementService : IChatManagementService
             UserIds = addChatRequest.UserIds ?? new List<Guid>()
         };
 
-        var chat = chatDto.ToDomain();
-        await _unitOfWork.Chat.AddAsync(chat);
+        await _unitOfWork.Chat.AddChatAsync(chat, addChatRequest.CreatorId);
         await _unitOfWork.CommitAsync();
     }
 
     public async Task UpdateChatAsync(UpdateChatRequest updateChatRequest)
     {
-        var chatDto = new ChatDto
+        var chat = new Chat
         {
             Id = updateChatRequest.ChatId,
             Title = updateChatRequest.Title,
-            UserIds = updateChatRequest.UserIds ?? new List<Guid>()
+            UserIds = updateChatRequest.UserIds ?? new List<Guid>(),
         };
         
-        await _unitOfWork.Chat.UpdateChatAsync(chatDto, updateChatRequest.UserId);
+        await _unitOfWork.Chat.UpdateChatAsync(chat, updateChatRequest.UserId);
         await _unitOfWork.CommitAsync();
     }
 

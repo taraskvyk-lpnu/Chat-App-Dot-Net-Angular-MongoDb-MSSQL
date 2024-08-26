@@ -32,12 +32,13 @@ public class ChatManagementServiceTests
         {
             CreatorId = Guid.NewGuid(),
             Title = "New Chat",
+            CreatorName = "Test User",
             UserIds = [Guid.NewGuid()]
         };
 
         await _chatManagementService.AddChatAsync(addChatRequest);
 
-        _mockUnitOfWork.Verify(u => u.Chat.AddAsync(It.IsAny<ChatDomain>()), Times.Once);
+        _mockUnitOfWork.Verify(u => u.Chat.AddChatAsync(It.IsAny<ChatDomain>(), addChatRequest.CreatorId), Times.Once);
         _mockUnitOfWork.Verify(u => u.CommitAsync(), Times.Once);
     }
 
@@ -54,7 +55,7 @@ public class ChatManagementServiceTests
 
         await _chatManagementService.UpdateChatAsync(updateChatRequest);
 
-        _mockUnitOfWork.Verify(u => u.Chat.UpdateChatAsync(It.IsAny<ChatDto>(), updateChatRequest.UserId), Times.Once);
+        _mockUnitOfWork.Verify(u => u.Chat.UpdateChatAsync(It.IsAny<ChatDomain>(), updateChatRequest.UserId), Times.Once);
         _mockUnitOfWork.Verify(u => u.CommitAsync(), Times.Once);
     }
 
