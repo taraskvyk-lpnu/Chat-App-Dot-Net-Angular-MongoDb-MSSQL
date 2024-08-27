@@ -9,6 +9,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("FullAccess", policyBuilder =>
+        policyBuilder
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowAnyOrigin());
+});
+
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(option =>
 {
@@ -37,6 +46,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseCors("FullAccess");
 
 app.MapControllers();
 ApplyMigration();

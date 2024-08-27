@@ -105,7 +105,7 @@ namespace Auth.API.Service
                 };
             }
 
-            var errorMessages = string.Join(";", result.ToString(), result.Errors.Select(e => e.Description));
+            var errorMessages = string.Join(";", result.Errors.Select(e => e.Description));
 
             return new ResponseDto
             {
