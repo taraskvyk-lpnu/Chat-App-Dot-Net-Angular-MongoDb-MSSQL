@@ -1,6 +1,6 @@
 ﻿namespace ChatManagement.Domain.Models.ChatRequests;
 
-public class DetachUserRequset
+public class DetachUserRequest
 {
     public Guid ChatId { get; set; }
     public Guid UserToDetachId { get; set; }

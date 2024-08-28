@@ -24,9 +24,8 @@ public class ChatManagementService : IChatManagementService
             Title = addChatRequest.Title,
             UserIds = addChatRequest.UserIds ?? new List<Guid>()
         };
-
-        var chat = chatDto.ToDomain();
-        await _unitOfWork.Chat.AddAsync(chat);
+        
+        await _unitOfWork.Chat.AddChatAsync(chatDto, addChatRequest.CreatorId);
         await _unitOfWork.CommitAsync();
     }
 
@@ -60,13 +59,19 @@ public class ChatManagementService : IChatManagementService
         var chat = await _unitOfWork.Chat.GetByIdAsync(chatId);
         return chat.ToDto();
     }
-
+    
+    public async Task<List<ChatDto>> GetChatsByUserIdAsync(Guid userId)
+    {
+        var chats = await _unitOfWork.Chat.GetChatsByUserIdAsync(userId);
+        return chats.Select(c => c.ToDto()).ToList();
+    }
+    
     public async Task AttachUserToChatAsync(AttachUserRequest addUserToChatRequest)
     {
         await _unitOfWork.Chat.AttachUserToChatAsync(addUserToChatRequest.ChatId, addUserToChatRequest.UserToAddId);
         await _unitOfWork.CommitAsync();
     }
-    public async Task DetachUserFromChatAsync(DetachUserRequset detachUserRequest)
+    public async Task DetachUserFromChatAsync(DetachUserRequest detachUserRequest)
     {
         await _unitOfWork.Chat.DetachUserFromChatAsync(detachUserRequest.ChatId, detachUserRequest.UserToDetachId);
         await _unitOfWork.CommitAsync();

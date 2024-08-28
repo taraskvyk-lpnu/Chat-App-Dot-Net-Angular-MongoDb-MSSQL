@@ -27,6 +27,13 @@ public class ChatsController : ControllerBase
         return Ok(chats);
     }
     
+    [HttpGet("user/{userId}")]
+    public async Task<IActionResult> GetChatsByUserId(Guid userId)
+    {
+        var chat = await _chatManagementService.GetChatsByUserIdAsync(userId);
+        return Ok(chat);
+    }
+    
     [HttpGet("{id}")]
     public async Task<IActionResult> GetChat(Guid id)
     {
@@ -83,7 +90,7 @@ public class ChatsController : ControllerBase
     }
     
     [HttpPost("detach-user")]
-    public async Task<ActionResult<ResponseDto>> DetachUserFromChat([FromBody] DetachUserRequset detachUserRequest)
+    public async Task<ActionResult<ResponseDto>> DetachUserFromChat([FromBody] DetachUserRequest detachUserRequest)
     {
         await _chatManagementService.DetachUserFromChatAsync(detachUserRequest);
         

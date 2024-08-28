@@ -100,7 +100,7 @@ public class ChatsControllerTests
     [Fact]
     public async Task DetachUserFromChat_ReturnsResponseDto_WithSuccessMessage()
     {
-        var detachUserRequest = new DetachUserRequset { ChatId = Guid.NewGuid(), UserToDetachId = Guid.NewGuid() };
+        var detachUserRequest = new DetachUserRequest { ChatId = Guid.NewGuid(), UserToDetachId = Guid.NewGuid() };
 
         var result = await _controller.DetachUserFromChat(detachUserRequest);
 

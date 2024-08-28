@@ -128,7 +128,7 @@ public class ChatManagementServiceTests
     [Fact]
     public async Task DetachUserToChatAsync_CallsAttachAndCommit()
     {
-        var detachUserRequest = new DetachUserRequset()
+        var detachUserRequest = new DetachUserRequest()
         {
             ChatId = Guid.NewGuid(),
             UserToDetachId = Guid.NewGuid(),

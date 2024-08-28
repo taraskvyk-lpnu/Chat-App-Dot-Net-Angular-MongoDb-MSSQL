@@ -11,7 +11,8 @@ public interface IChatManagementService
     Task RemoveChatAsync(RemoveChatRequest deleteChatRequest);
     Task<IEnumerable<ChatDto>> GetAllChatsAsync();
     Task<ChatDto> GetChatByIdAsync(Guid chatId);
+    Task<List<ChatDto>> GetChatsByUserIdAsync(Guid userId);
     
     Task AttachUserToChatAsync(AttachUserRequest addUserToChatRequest);
-    Task DetachUserFromChatAsync(DetachUserRequset detachUserRequest);
+    Task DetachUserFromChatAsync(DetachUserRequest detachUserRequest);
 }

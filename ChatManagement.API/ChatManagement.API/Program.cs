@@ -35,7 +35,7 @@ public class Program
         app.UseCors("FullAccess");
 
         app.MapControllers();
-        app.ApplyMigrations();
+        //app.ApplyMigrations();
         app.Run();
     }
 }
