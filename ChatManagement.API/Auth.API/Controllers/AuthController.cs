@@ -18,6 +18,22 @@ namespace Auth.API.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequestDto model)
         {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+
+                var errorResponse = new ResponseDto
+                {
+                    IsSuccess = false,
+                    Message = string.Join("; ", errors)
+                };
+
+                return BadRequest(errorResponse);
+            }
+            
             var registerResponse = await _authService.RegisterAsync(model);
 
             if (!registerResponse.IsSuccess)
@@ -31,6 +47,22 @@ namespace Auth.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest model)
         {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+
+                var errorResponse = new ResponseDto
+                {
+                    IsSuccess = false,
+                    Message = string.Join("; ", errors)
+                };
+
+                return BadRequest(errorResponse);
+            }
+            
             var loginResponse = await _authService.LoginAsync(model);
            
             if (!loginResponse.IsSuccess)

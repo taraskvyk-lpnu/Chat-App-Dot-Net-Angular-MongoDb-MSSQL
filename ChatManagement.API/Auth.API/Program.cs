@@ -1,4 +1,5 @@
 using Auth.API.Data;
+using Auth.API.Extensions;
 using Auth.API.Models;
 using Auth.API.Service;
 using Auth.API.Service.IService;
@@ -8,31 +9,13 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("FullAccess", policyBuilder =>
-        policyBuilder
-            .AllowAnyHeader()
-            .AllowAnyMethod()
-            .AllowAnyOrigin());
-});
-
-// Add services to the container.
-builder.Services.AddDbContext<AppDbContext>(option =>
-{
-    option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
-
-builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("ApiSettings:JwtOptions"));
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>()
-    .AddDefaultTokenProviders();
-
-builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
-builder.Services.AddScoped<IAuthService, AuthService>();
+builder.AddCustomCors();
+builder.AddDbContext();
+builder.AddJwtAuth();
+builder.AddScopedServices();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.AddSwaggerGen();
 
 var app = builder.Build();
 
