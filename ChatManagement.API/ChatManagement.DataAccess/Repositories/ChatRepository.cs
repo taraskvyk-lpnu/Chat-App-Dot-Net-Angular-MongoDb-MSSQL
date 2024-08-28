@@ -60,8 +60,8 @@ public class ChatRepository : Repository<Chat>, IChatRepository
             throw new AccessViolationException("You can't update this chat");
         }
         
-        chat.Title = chat.Title;
-        chat.UserIds = chat.UserIds;
+        existingChat.Title = chat.Title;
+        existingChat.UserIds = chat.UserIds;
         await _chatContext.SaveChangesAsync();
     }
     
@@ -101,7 +101,7 @@ public class ChatRepository : Repository<Chat>, IChatRepository
         await _chatContext.SaveChangesAsync();
     }
 
-    public async Task DetachUserFromChatAsync(Guid chatId, Guid userId)
+    public async Task DetachUserFromChatAsync(Guid chatId, Guid userToDetachId, Guid detachedByUserId)
     {
         var chat = await _chatContext.Chats.FirstOrDefaultAsync(c => c.Id == chatId);
 
@@ -110,17 +110,17 @@ public class ChatRepository : Repository<Chat>, IChatRepository
             throw new NotFoundException("Chat not found");
         }
         
-        if (!chat.UserIds.Contains(userId))
+        if (!chat.UserIds.Contains(userToDetachId))
         {
             throw new UserAttachmentException("This user hadn't been attached to chat");
         }
         
-        if(chat.UserIds.Contains(userId) && chat.CreatorId == userId)
+        if(chat.UserIds.Contains(userToDetachId) && chat.CreatorId == userToDetachId)
         {
             throw new AccessViolationException("You can't detach yourself from chat");
         }
         
-        chat.UserIds.Remove(userId);
+        chat.UserIds.Remove(userToDetachId);
         await _chatContext.SaveChangesAsync();
     }
 }

@@ -2,7 +2,7 @@
 
 public class UserAttachmentException : ApiException
 {
-    public UserAttachmentException(string message) : base(message)
+    public UserAttachmentException(string message) : base(message, 400)
     {
     }
 }

@@ -1,5 +1,4 @@
 ﻿using ChatManagement.DataAccess;
-using ChatManagement.Domain.Models.Dtos;
 using ChatManagement.Infrastructure.CustomException;
 using ChatManagement.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -24,20 +23,20 @@ public class ChatRepositoryTests
     [Fact]
     public async Task AddChatAsync_ChatDoesNotExist_AddsChatSuccessfully()
     {
-        var chatDto = new ChatDto
+        var userId = Guid.NewGuid();
+        var chat = new ChatDomain
         {
             Title = "Test Chat",
-            UserIds = new List<Guid>()
+            UserIds = [userId]
         };
-        var userId = Guid.NewGuid();
 
-        await _chatRepository.AddChatAsync(chatDto, userId);
+        await _chatRepository.AddChatAsync(chat);
 
-        var chat = await _dbContext.Chats.FirstOrDefaultAsync(c => c.Title == "Test Chat");
-        Assert.NotNull(chat);
+        var addedChat = await _dbContext.Chats.FirstOrDefaultAsync(c => c.Title == chat.Title);
+        Assert.NotNull(addedChat);
         
-        Assert.Equal("Test Chat", chat.Title);
-        Assert.Contains(userId, chat.UserIds.ToList());
+        Assert.Equal(chat.Title, addedChat.Title);
+        Assert.Contains(userId, addedChat.UserIds.ToList());
     }
 
     [Fact]
@@ -55,13 +54,14 @@ public class ChatRepositoryTests
         await _dbContext.Chats.AddAsync(chat);
         await _dbContext.SaveChangesAsync();
 
-        var chatDto = new ChatDto
+        var duplicateChat = new ChatDomain
         {
+            CreatedAt = DateTime.Now,
             Title = "Existing Chat",
             UserIds = new List<Guid>()
         };
 
-        await Assert.ThrowsAsync<ApiException>(() => _chatRepository.AddChatAsync(chatDto, userId));
+        await Assert.ThrowsAsync<ApiException>(() => _chatRepository.AddChatAsync(duplicateChat));
     }
 
     [Fact]
@@ -83,7 +83,7 @@ public class ChatRepositoryTests
             .ToList();
         
         Assert.Single(chats);
-        Assert.Equal("User Chat", chats.First().Title);
+        Assert.Equal(chat.Title, chats.First().Title);
     }
 
     [Fact]
@@ -102,17 +102,17 @@ public class ChatRepositoryTests
         await _dbContext.Chats.AddAsync(chat);
         await _dbContext.SaveChangesAsync();
 
-        var chatDto = new ChatDto
+        var chatToUpdate = new ChatDomain
         {
             Id = chat.Id,
             Title = "Updated Title",
             UserIds = [userId]
         };
 
-        await _chatRepository.UpdateChatAsync(chatDto, userId);
+        await _chatRepository.UpdateChatAsync(chatToUpdate, userId);
 
         var updatedChat = await _dbContext.Chats.FindAsync(chat.Id);
-        Assert.Equal("Updated Title", updatedChat!.Title);
+        Assert.Equal(chatToUpdate.Title, updatedChat!.Title);
     }
 
     [Fact]
@@ -132,14 +132,14 @@ public class ChatRepositoryTests
         await _dbContext.Chats.AddAsync(chat);
         await _dbContext.SaveChangesAsync();
 
-        var chatDto = new ChatDto
+        var chatToUpdate = new ChatDomain
         {
             Id = chat.Id,
             Title = "Updated Title",
             UserIds = [userId]
         };
 
-        await Assert.ThrowsAsync<AccessViolationException>(() => _chatRepository.UpdateChatAsync(chatDto, anotherUserId));
+        await Assert.ThrowsAsync<AccessViolationException>(() => _chatRepository.UpdateChatAsync(chatToUpdate, anotherUserId));
     }
 
     [Fact]
@@ -247,7 +247,7 @@ public class ChatRepositoryTests
         await _dbContext.Chats.AddAsync(chat);
         await _dbContext.SaveChangesAsync();
 
-        await _chatRepository.DetachUserFromChatAsync(chatId, userId);
+        await _chatRepository.DetachUserFromChatAsync(chatId, userId, creatorId);
         
         var updatedChat = await _dbContext.Chats.FindAsync(chatId);
         Assert.DoesNotContain(userId, updatedChat!.UserIds);
@@ -271,13 +271,13 @@ public class ChatRepositoryTests
         await _dbContext.Chats.AddAsync(chat);
         await _dbContext.SaveChangesAsync();
 
-        await Assert.ThrowsAsync<AccessViolationException>(() => _chatRepository.DetachUserFromChatAsync(chatId, userId));
+        await Assert.ThrowsAsync<AccessViolationException>(() => _chatRepository.DetachUserFromChatAsync(chatId, userId, chat.CreatorId));
     }
 
     [Fact]
     public async Task DetachUserFromChatAsync_UserNotAttached_ThrowsUserAttachmentException()
     {
-        var userId = Guid.NewGuid();
+        var creatorId = Guid.NewGuid();
         var anotherUserId = Guid.NewGuid();
         var chatId = Guid.NewGuid();
       
@@ -285,14 +285,14 @@ public class ChatRepositoryTests
         {
             Id = chatId,
             Title = "Chat",
-            UserIds = [userId],
-            CreatorId = userId,
+            UserIds = [creatorId],
+            CreatorId = creatorId,
             CreatedAt = DateTime.Now
         };
         
         await _dbContext.Chats.AddAsync(chat);
         await _dbContext.SaveChangesAsync();
 
-        await Assert.ThrowsAsync<UserAttachmentException>(() => _chatRepository.DetachUserFromChatAsync(chatId, anotherUserId));
+        await Assert.ThrowsAsync<UserAttachmentException>(() => _chatRepository.DetachUserFromChatAsync(chatId, anotherUserId, creatorId));
     }
 }

@@ -49,7 +49,7 @@ public class ChatsController : ControllerBase
     [HttpPut("{id}")]
     public async Task<ActionResult<ResponseDto>> UpdateChat(Guid id, [FromBody] UpdateChatRequest updateChatRequest)
     {
-        await _chatManagementService.UpdateChatAsync(updateChatRequest);
+        await _chatManagementService.UpdateChatAsync(id, updateChatRequest);
         
         return new ResponseDto
         {
@@ -59,8 +59,14 @@ public class ChatsController : ControllerBase
     }
     
     [HttpDelete("{id}")]
-    public async Task<ActionResult<ResponseDto>> RemoveChat(RemoveChatRequest removeChatRequest)
+    public async Task<ActionResult<ResponseDto>> RemoveChat(Guid id, Guid userId)
     {
+        var removeChatRequest = new RemoveChatRequest
+        {
+            ChatId = id,
+            UserId = userId
+        };
+        
         await _chatManagementService.RemoveChatAsync(removeChatRequest);
         
         return new ResponseDto

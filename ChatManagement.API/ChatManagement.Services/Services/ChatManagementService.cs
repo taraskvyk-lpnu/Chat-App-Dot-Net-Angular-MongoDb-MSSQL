@@ -30,11 +30,11 @@ public class ChatManagementService : IChatManagementService
         await _unitOfWork.CommitAsync();
     }
 
-    public async Task UpdateChatAsync(UpdateChatRequest updateChatRequest)
+    public async Task UpdateChatAsync(Guid id, UpdateChatRequest updateChatRequest)
     {
         var chat = new Chat
         {
-            Id = updateChatRequest.ChatId,
+            Id = id,
             Title = updateChatRequest.Title,
             UserIds = updateChatRequest.UserIds ?? new List<Guid>()
         };
@@ -68,7 +68,7 @@ public class ChatManagementService : IChatManagementService
     }
     public async Task DetachUserFromChatAsync(DetachUserRequset detachUserRequest)
     {
-        await _unitOfWork.Chat.DetachUserFromChatAsync(detachUserRequest.ChatId, detachUserRequest.UserToDetachId);
+        await _unitOfWork.Chat.DetachUserFromChatAsync(detachUserRequest.ChatId, detachUserRequest.UserToDetachId, detachUserRequest.DetachedByUserId);
         await _unitOfWork.CommitAsync();
     }
 }

@@ -25,6 +25,11 @@ public class GlobalExceptionHandler
             context.Response.StatusCode = apiEx.StatusCode;
             await WriteResponse(context, apiEx.Message);
         }
+        catch (AccessViolationException ex)
+        {
+            context.Response.StatusCode = 403;
+            await WriteResponse(context, ex.Message);
+        }
         catch (Exception ex)
         {
             context.Response.StatusCode = 500;

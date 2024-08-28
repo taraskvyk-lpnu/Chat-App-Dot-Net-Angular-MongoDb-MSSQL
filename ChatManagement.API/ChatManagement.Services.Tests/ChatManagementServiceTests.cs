@@ -37,7 +37,7 @@ public class ChatManagementServiceTests
 
         await _chatManagementService.AddChatAsync(addChatRequest);
 
-        _mockUnitOfWork.Verify(u => u.Chat.AddAsync(It.IsAny<ChatDomain>()), Times.Once);
+        _mockUnitOfWork.Verify(u => u.Chat.AddChatAsync(It.IsAny<ChatDomain>()), Times.Once);
         _mockUnitOfWork.Verify(u => u.CommitAsync(), Times.Once);
     }
 
@@ -52,9 +52,9 @@ public class ChatManagementServiceTests
             UserIds = new List<Guid> { Guid.NewGuid() }
         };
 
-        await _chatManagementService.UpdateChatAsync(updateChatRequest);
+        await _chatManagementService.UpdateChatAsync(updateChatRequest.UserId, updateChatRequest);
 
-        _mockUnitOfWork.Verify(u => u.Chat.UpdateChatAsync(It.IsAny<ChatDto>(), updateChatRequest.UserId), Times.Once);
+        _mockUnitOfWork.Verify(u => u.Chat.UpdateChatAsync(It.IsAny<ChatDomain>(), updateChatRequest.UserId), Times.Once);
         _mockUnitOfWork.Verify(u => u.CommitAsync(), Times.Once);
     }
 
@@ -93,7 +93,7 @@ public class ChatManagementServiceTests
     public async Task GetChatByIdAsync_ReturnsChat()
     {
         var chatId = Guid.NewGuid();
-        _mockUnitOfWork.Setup(u => u.Chat.GetByIdAsync(chatId))
+        _mockUnitOfWork.Setup(u => u.Chat.GetChatByIdAsync(chatId))
             .ReturnsAsync(
                 new ChatDomain
                 {
@@ -105,7 +105,7 @@ public class ChatManagementServiceTests
 
         Assert.NotNull(result);
         Assert.Equal(chatId, result.Id);
-        _mockUnitOfWork.Verify(u => u.Chat.GetByIdAsync(chatId), Times.Once);
+        _mockUnitOfWork.Verify(u => u.Chat.GetChatByIdAsync(chatId), Times.Once);
     }
     
     [Fact]
@@ -138,7 +138,7 @@ public class ChatManagementServiceTests
         await _chatManagementService.DetachUserFromChatAsync(detachUserRequest);
         
         _mockUnitOfWork.Verify(u => 
-            u.Chat.DetachUserFromChatAsync(detachUserRequest.ChatId, detachUserRequest.UserToDetachId), Times.Once);
+            u.Chat.DetachUserFromChatAsync(detachUserRequest.ChatId, detachUserRequest.UserToDetachId, detachUserRequest.DetachedByUserId), Times.Once);
         _mockUnitOfWork.Verify(u => u.CommitAsync(), Times.Once); 
     }
 }

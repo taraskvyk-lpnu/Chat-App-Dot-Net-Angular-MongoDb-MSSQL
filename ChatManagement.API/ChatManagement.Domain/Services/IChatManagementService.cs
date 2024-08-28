@@ -7,7 +7,7 @@ namespace ChatManagement.Domain.Services;
 public interface IChatManagementService
 {
     Task AddChatAsync(AddChatRequest addChatRequest);
-    Task UpdateChatAsync(UpdateChatRequest updateChatRequest);
+    Task UpdateChatAsync(Guid id, UpdateChatRequest updateChatRequest);
     Task RemoveChatAsync(RemoveChatRequest deleteChatRequest);
     Task<IEnumerable<ChatDto>> GetAllChatsAsync();
     Task<ChatDto> GetChatByIdAsync(Guid chatId);

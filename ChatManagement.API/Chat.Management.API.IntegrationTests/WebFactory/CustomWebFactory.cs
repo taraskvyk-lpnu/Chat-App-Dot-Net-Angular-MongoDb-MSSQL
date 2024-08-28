@@ -25,7 +25,7 @@ public class CustomWebFactory<Program> : WebApplicationFactory<ChatManagement.AP
             
             var scopedServices = scope.ServiceProvider;
             var db = scopedServices.GetRequiredService<ChatManagementDbContext>();
-
+            
             db.Database.EnsureCreated();
 
             SeedDatabase(db);
@@ -34,12 +34,17 @@ public class CustomWebFactory<Program> : WebApplicationFactory<ChatManagement.AP
     
     private void SeedDatabase(ChatManagementDbContext context)
     {
+        context.Chats.RemoveRange(context.Chats);
+        context.SaveChanges();
+
+        var creatorId = Guid.NewGuid();
+        
         _validChat = new ChatDomain
         {
-            CreatorId = Guid.NewGuid(),
+            CreatorId = creatorId,
             Title = "Test chat",
             CreatedAt = DateTime.Now,
-            UserIds = [Guid.NewGuid()]
+            UserIds = [creatorId, Guid.NewGuid()]
         };
         
         context.Chats.Add(_validChat);
@@ -47,12 +52,11 @@ public class CustomWebFactory<Program> : WebApplicationFactory<ChatManagement.AP
         
         _chatToRemove = new ChatDomain
         {
-            CreatorId = Guid.NewGuid(),
+            CreatorId =creatorId,
             Title = "To remove chat",
             CreatedAt = DateTime.Now,
-            UserIds = [Guid.NewGuid()]
+            UserIds = [creatorId]
         };
-        
         
         context.Chats.Add(_chatToRemove);
         context.SaveChanges();

@@ -105,7 +105,7 @@ public class Program
 
         app.MapControllers();
         
-        ApplyMigrations(app);
+        //ApplyMigrations(app);
 
         app.Run();
     }

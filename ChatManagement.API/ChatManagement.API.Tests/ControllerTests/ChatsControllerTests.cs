@@ -76,7 +76,7 @@ public class ChatsControllerTests
     {
         var removeChatRequest = new RemoveChatRequest { ChatId = Guid.NewGuid() };
 
-        var result = await _controller.RemoveChat(removeChatRequest);
+        var result = await _controller.RemoveChat(removeChatRequest.ChatId, removeChatRequest.UserId);
 
         var actionResult = Assert.IsType<ActionResult<ResponseDto>>(result);
         var responseDto = Assert.IsType<ResponseDto>(actionResult.Value);
