@@ -32,7 +32,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatManagement.API.Tests", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IntegrationTests", "IntegrationTests", "{089ED657-E853-4879-A5D2-C8398B6D326C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Management.API.IntegartionTests", "Chat.Management.API.IntegartionTests\Chat.Management.API.IntegartionTests.csproj", "{4632C86E-7F5D-49AE-810A-49A72C1FB58B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Management.API.IntegrationTests", "Chat.Management.API.IntegrationTests\Chat.Management.API.IntegrationTests.csproj", "{4632C86E-7F5D-49AE-810A-49A72C1FB58B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

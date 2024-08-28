@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ChatManagement.API.Controllers;
 
-[Authorize]
+//[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class ChatsController : ControllerBase
@@ -20,7 +20,7 @@ public class ChatsController : ControllerBase
     }
     
     [HttpGet]
-    [Authorize("RequireAdminRole")]
+    //[Authorize("RequireAdminRole")]
     public async Task<IActionResult> GetChats()
     {
         var chats = await _chatManagementService.GetAllChatsAsync();
