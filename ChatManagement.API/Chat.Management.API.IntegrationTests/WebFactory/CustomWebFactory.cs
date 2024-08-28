@@ -7,6 +7,7 @@ using ChatDomain = ChatManagement.Domain.Models.Chat;
 
 namespace Chat.Management.API.IntegrationTests.WebFactory;
 
+// Remove [Authorize] attribute from ChatsController to test the endpoints (without authentication)
 public class CustomWebFactory<Program> : WebApplicationFactory<ChatManagement.API.Program>
 {
     private ChatDomain _validChat;

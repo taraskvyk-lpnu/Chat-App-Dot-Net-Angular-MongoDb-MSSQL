@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ChatManagement.API.Controllers;
 
-//[Authorize]
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class ChatsController : ControllerBase
@@ -20,14 +20,14 @@ public class ChatsController : ControllerBase
     }
     
     [HttpGet]
-    //[Authorize("RequireAdminRole")]
+    [Authorize("RequireAdminRole")]
     public async Task<IActionResult> GetChats()
     {
         var chats = await _chatManagementService.GetAllChatsAsync();
         return Ok(chats);
     }
     
-    [HttpGet("{id}")]
+    [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetChat(Guid id)
     {
         var chat = await _chatManagementService.GetChatByIdAsync(id);
@@ -46,7 +46,7 @@ public class ChatsController : ControllerBase
         };
     }
     
-    [HttpPut("{id}")]
+    [HttpPut("{id:guid}")]
     public async Task<ActionResult<ResponseDto>> UpdateChat(Guid id, [FromBody] UpdateChatRequest updateChatRequest)
     {
         await _chatManagementService.UpdateChatAsync(id, updateChatRequest);
@@ -58,7 +58,7 @@ public class ChatsController : ControllerBase
         };
     }
     
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:guid}")]
     public async Task<ActionResult<ResponseDto>> RemoveChat(Guid id, Guid userId)
     {
         var removeChatRequest = new RemoveChatRequest
