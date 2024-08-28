@@ -18,46 +18,50 @@ public class ChatRepository : Repository<Chat>, IChatRepository
             .Where(c => c.UserIds.Contains(userId))
             .ToListAsync();
     }
-    
-    public async Task AddChatAsync(ChatDto chatDto, Guid userId)
-    {
-        var chat = await _chatContext.Chats.FirstOrDefaultAsync(c => c.Title == chatDto.Title);
 
-        if (chat != null)
+    public async Task<Chat> GetChatByIdAsync(Guid chatId)
+    {
+        var existingChat = await _chatContext.Chats.FirstOrDefaultAsync(c => c.Id == chatId);
+
+        if (existingChat == null)
+        {
+            throw new NotFoundException("Chat does not exist");
+        }
+        
+        return existingChat;
+    }
+
+    public async Task AddChatAsync(Chat chat)
+    {
+        var existingChat = await _chatContext.Chats.FirstOrDefaultAsync(c => c.Title == chat.Title);
+
+        if (existingChat != null)
         {
             throw new ApiException($"Chat \"{chat.Title}\" already exists");
         }
 
-        chatDto.UserIds.Add(userId);
-
-        chat = new Chat
-        {
-            Title = chatDto.Title,
-            UserIds = chatDto.UserIds,
-            CreatorId = userId,
-            CreatedAt = DateTime.Now
-        };
+        chat.UserIds.Add(chat.CreatorId);
         
         await _chatContext.Chats.AddAsync(chat);
         await _chatContext.SaveChangesAsync();
     }
     
-    public async Task UpdateChatAsync(ChatDto chatDto, Guid userId)
+    public async Task UpdateChatAsync(Chat chat, Guid userId)
     {
-        var chat = await _chatContext.Chats.FirstOrDefaultAsync(c => c.Id == chatDto.Id);
+        var existingChat = await _chatContext.Chats.FirstOrDefaultAsync(c => c.Id == chat.Id);
 
-        if (chat == null)
+        if (existingChat == null)
         {
             throw new NotFoundException("Chat does not exist");
         }
         
-        if (chat.CreatorId != userId)
+        if (existingChat.CreatorId != userId)
         {
             throw new AccessViolationException("You can't update this chat");
         }
         
-        chat.Title = chatDto.Title;
-        chat.UserIds = chatDto.UserIds;
+        chat.Title = chat.Title;
+        chat.UserIds = chat.UserIds;
         await _chatContext.SaveChangesAsync();
     }
     

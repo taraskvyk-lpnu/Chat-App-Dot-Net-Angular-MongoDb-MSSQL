@@ -10,7 +10,8 @@ public interface IChatRepository : IRepository<Chat>
     Task<IEnumerable<Chat>> GetChatsByUserIdAsync(Guid userId);
     
     //Task<IEnumerable<User>> GetUsersByChatIdAsync(string chatId);
-    Task AddChatAsync(ChatDto chatDto, Guid userId);
-    Task UpdateChatAsync(ChatDto chatDto, Guid userId);
+    Task<Chat> GetChatByIdAsync(Guid chatId);
+    Task AddChatAsync(Chat chat);
+    Task UpdateChatAsync(Chat chat, Guid userId);
     Task RemoveChatAsync(Guid chatId, Guid userId);
 }

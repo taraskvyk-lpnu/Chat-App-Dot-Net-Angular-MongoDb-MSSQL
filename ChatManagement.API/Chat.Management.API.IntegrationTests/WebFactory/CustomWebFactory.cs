@@ -16,16 +16,8 @@ public class CustomWebFactory<Program> : WebApplicationFactory<ChatManagement.AP
     {
         builder.ConfigureServices(services =>
         {
-            var descriptor = services.SingleOrDefault(
-                d => d.ServiceType == typeof(DbContextOptions<ChatManagementDbContext>));
-
-            if (descriptor != null)
-            {
-                services.Remove(descriptor);
-            }
-
             services.AddDbContext<ChatManagementDbContext>(options =>
-                options.UseSqlServer("ChatManagement.Integration.Tests"));
+                options.UseInMemoryDatabase("ChatManagement.Integration.Tests"));
             
             var sp = services.BuildServiceProvider();
 
