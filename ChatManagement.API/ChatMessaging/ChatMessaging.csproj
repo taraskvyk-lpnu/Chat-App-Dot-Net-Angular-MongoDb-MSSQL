@@ -22,7 +22,6 @@
 
     <ItemGroup>
       <Folder Include="DataAccess\Repository\" />
-      <Folder Include="Extensions\" />
     </ItemGroup>
 
 </Project>
