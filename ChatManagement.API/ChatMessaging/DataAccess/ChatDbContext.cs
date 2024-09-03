@@ -12,4 +12,9 @@ public class ChatDbContext
         var client = new MongoClient(configuration["MongoDB:ConnectionString"]);
         _database = client.GetDatabase(configuration["MongoDB:DatabaseName"]);
     }
+    
+    public IMongoCollection<Message> GetMessageCollection(Guid chatId)
+    {
+        return _database.GetCollection<Message>($"Messages_{chatId}");
+    }
 }

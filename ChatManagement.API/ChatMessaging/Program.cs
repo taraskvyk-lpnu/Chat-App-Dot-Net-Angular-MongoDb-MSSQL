@@ -1,5 +1,6 @@
 using System.Text;
 using ChatMessaging.Contracts;
+using ChatMessaging.DataAccess;
 using ChatMessaging.Implementations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -15,7 +16,8 @@ public class Program
 
         // Add services to the container.
         builder.Services.AddAuthorization();
-        builder.Services.AddSingleton<IChatRepository, MongoChatRepository>();
+        builder.Services.AddSingleton<ChatDbContext>();
+        builder.Services.AddScoped<IMessageRepository, MongoMessageRepository>();
         builder.Services.AddSignalR();
         
         var jwtOptions = builder.Configuration.GetSection("ApiSettings:JwtOptions").Get<JwtOptions>();

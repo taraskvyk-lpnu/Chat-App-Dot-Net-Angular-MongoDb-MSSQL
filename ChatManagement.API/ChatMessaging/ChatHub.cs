@@ -8,11 +8,11 @@ namespace ChatMessaging
     [Authorize]
     public class ChatHub : Hub
     {
-        private readonly IChatRepository _chatRepository;
+        private readonly IMessageRepository _messageRepository;
 
-        public ChatHub(IChatRepository chatRepository)
+        public ChatHub(IMessageRepository messageRepository)
         {
-            _chatRepository = chatRepository;
+            _messageRepository = messageRepository;
         }
 
         public async Task JoinChat(Guid chatId)
@@ -23,13 +23,13 @@ namespace ChatMessaging
 
         public async Task SendMessage(Guid chatId, Message message)
         {
-            await _chatRepository.SaveMessageAsync(chatId, message);
+            await _messageRepository.AddMessageAsync(chatId, message);
             await Clients.Group(chatId.ToString()).SendAsync("ReceiveMessage", chatId, message);
         }
 
         public async Task LoadMessages(Guid chatId)
         {
-            var messages = await _chatRepository.GetMessagesAsync(chatId);
+            var messages = await _messageRepository.GetMessagesAsync(chatId);
             await Clients.Caller.SendAsync("ReceiveMessages", chatId, messages);
         }
 
