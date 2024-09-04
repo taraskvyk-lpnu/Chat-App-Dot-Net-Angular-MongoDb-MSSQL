@@ -2,6 +2,8 @@
 using ChatMessaging.Contracts;
 using ChatMessaging.DataAccess;
 using ChatMessaging.Implementations;
+using ChatMessaging.Services.Contracts;
+using ChatMessaging.Services.Implementations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -14,6 +16,7 @@ public static class WebApplicationBuilderExtensions
     {
         builder.Services.AddSingleton<ChatDbContext>();
         builder.Services.AddScoped<IMessageRepository, MongoMessageRepository>();
+        builder.Services.AddScoped<IMessageService, MessageService>();
         builder.Services.AddSignalR();
     }
 

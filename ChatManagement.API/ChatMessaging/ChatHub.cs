@@ -1,5 +1,7 @@
 ﻿using ChatMessaging.Contracts;
 using ChatMessaging.Models;
+using ChatMessaging.Models.MessageRequests;
+using ChatMessaging.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 
@@ -8,28 +10,28 @@ namespace ChatMessaging
     [Authorize]
     public class ChatHub : Hub
     {
-        private readonly IMessageRepository _messageRepository;
+        private readonly IMessageService _messageService;
 
-        public ChatHub(IMessageRepository messageRepository)
+        public ChatHub(IMessageService messageService)
         {
-            _messageRepository = messageRepository;
+            _messageService = messageService;
         }
 
         public async Task JoinChat(Guid chatId)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, chatId.ToString());
-            await LoadMessages(chatId);
+            await LoadMessagesAsync(chatId);
         }
 
-        public async Task SendMessage(Guid chatId, Message message)
+        public async Task SendMessage(AddMessageRequest request)
         {
-            await _messageRepository.AddMessageAsync(chatId, message);
-            await Clients.Group(chatId.ToString()).SendAsync("ReceiveMessage", chatId, message);
+            await _messageService.AddMessageAsync(request);
+            await Clients.Group(request.ChatId.ToString()).SendAsync("ReceiveMessage", request.ChatId, request.Message);
         }
 
-        public async Task LoadMessages(Guid chatId)
+        private async Task LoadMessagesAsync(Guid chatId)
         {
-            var messages = await _messageRepository.GetMessagesAsync(chatId);
+            var messages = await _messageService.GetMessagesAsync(chatId);
             await Clients.Caller.SendAsync("ReceiveMessages", chatId, messages);
         }
 
