@@ -26,7 +26,7 @@ public class MongoMessageRepository : IMessageRepository
         
         if (messageCollection == null)
         {
-            throw new Exception("Message collection not found.");
+            throw new Exception($"{nameof(Message)} collection not found.");
         }
         
         var chatIdFilter = Builders<Message>.Filter.Eq(m => m.ChatId, chatId);
