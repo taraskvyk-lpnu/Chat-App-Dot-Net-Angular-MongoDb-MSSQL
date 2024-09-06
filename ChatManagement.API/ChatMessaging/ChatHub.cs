@@ -1,13 +1,11 @@
-﻿using ChatMessaging.Contracts;
-using ChatMessaging.Models;
-using ChatMessaging.Models.MessageRequests;
+﻿using ChatMessaging.Models.MessageRequests;
 using ChatMessaging.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 
 namespace ChatMessaging
 {
-    [Authorize]
+    //[Authorize]
     public class ChatHub : Hub
     {
         private readonly IMessageService _messageService;

@@ -9,6 +9,7 @@ public static class Program
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddAuthorization();
+        builder.AddCors();
         builder.AddChatServices();
         
         builder.AddJwtAuth();
@@ -31,6 +32,7 @@ public static class Program
         app.UseAuthentication();
         app.UseAuthorization();
         
+        app.UseCors("AllowAll");
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapHub<ChatHub>("/chathub");

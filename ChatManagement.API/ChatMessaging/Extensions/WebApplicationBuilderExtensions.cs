@@ -72,4 +72,18 @@ public static class WebApplicationBuilderExtensions
             });
         });
     }
+    
+    public static void AddCors(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAll",
+                builder => builder
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .SetIsOriginAllowed(origin => true) 
+                    .AllowCredentials());
+        });
+
+    }
 }
