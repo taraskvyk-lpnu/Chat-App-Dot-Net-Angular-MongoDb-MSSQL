@@ -23,8 +23,10 @@ namespace ChatMessaging
 
         public async Task SendMessage(AddMessageRequest request)
         {
-            await _messageService.AddMessageAsync(request);
-            await Clients.Group(request.ChatId.ToString()).SendAsync("ReceiveMessage", request.ChatId, request.Message);
+            var result = await _messageService.AddMessageAsync(request);
+
+            if (result) 
+                await Clients.Group(request.ChatId.ToString()).SendAsync("ReceiveMessage", request.ChatId, request.Message);
         }
 
         private async Task LoadMessagesAsync(Guid chatId)

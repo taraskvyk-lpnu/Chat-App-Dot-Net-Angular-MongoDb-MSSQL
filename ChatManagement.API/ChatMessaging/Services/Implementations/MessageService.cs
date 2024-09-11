@@ -2,6 +2,7 @@
 using ChatMessaging.Models;
 using ChatMessaging.Models.MessageRequests;
 using ChatMessaging.Services.Contracts;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace ChatMessaging.Services.Implementations;
 
@@ -24,14 +25,26 @@ public class MessageService : IMessageService
         return await _messageRepository.GetMessagesByUserAsync(request.ChatId, request.UserId);
     }
 
-    public async Task AddMessageAsync(AddMessageRequest request)
+    public async Task<bool> AddMessageAsync(AddMessageRequest request)
     {
+        if (string.IsNullOrEmpty(request.Message.Text.Trim()))
+        {
+            return false;
+        }
+        
         await _messageRepository.AddMessageAsync(request.ChatId, request.Message);
+        return true;
     }
 
-    public async Task UpdateMessageAsync(UpdateMessageRequest request)
+    public async Task<bool> UpdateMessageAsync(UpdateMessageRequest request)
     {
+        if (string.IsNullOrEmpty(request.Message.Text.Trim()))
+        {
+            return false;
+        }
+        
         await _messageRepository.UpdateMessageAsync(request.ChatId, request.UserId, request.Message);
+        return true;
     }
 
     public async Task DeleteMessageAsync(DeleteMessageRequest request)
