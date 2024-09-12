@@ -1,0 +1,16 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/chathub/{everything}",
+      "DownstreamScheme": "ws",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5022
+        }
+      ],
+      "UpstreamPathTemplate": "/chathub/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options" ]
+    }
+  ]
+}

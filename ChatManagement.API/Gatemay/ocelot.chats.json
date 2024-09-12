@@ -1,0 +1,100 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/chats",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5115
+        }
+      ],
+      "UpstreamPathTemplate": "/api/chats",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/chats/user/{chatId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5115
+        }
+      ],
+      "UpstreamPathTemplate": "/api/chats/user/{chatId}",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/chats/{Id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5115
+        }
+      ],
+      "UpstreamPathTemplate": "/api/chats/{Id}",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/chats",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5115
+        }
+      ],
+      "UpstreamPathTemplate": "/api/chats",
+      "UpstreamHttpMethod": [ "Post" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/chats/{Id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5115
+        }
+      ],
+      "UpstreamPathTemplate": "/api/chats/{Id}",
+      "UpstreamHttpMethod": [ "Put" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/chats/{Id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5115
+        }
+      ],
+      "UpstreamPathTemplate": "/api/chats/{Id}",
+      "UpstreamHttpMethod": [ "Delete" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/chats/attach-user",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5115
+        }
+      ],
+      "UpstreamPathTemplate": "/api/chats/attach-user",
+      "UpstreamHttpMethod": [ "Post" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/chats/detach-user",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5115
+        }
+      ],
+      "UpstreamPathTemplate": "/api/chats/detach-user",
+      "UpstreamHttpMethod": [ "Post" ]
+    }
+  ]
+}
