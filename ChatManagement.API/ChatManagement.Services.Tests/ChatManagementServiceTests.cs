@@ -37,7 +37,7 @@ public class ChatManagementServiceTests
 
         await _chatManagementService.AddChatAsync(addChatRequest);
 
-        _mockUnitOfWork.Verify(u => u.Chat.AddAsync(It.IsAny<ChatDomain>()), Times.Once);
+        _mockUnitOfWork.Verify(u => u.Chat.AddChatAsync(It.IsAny<ChatDto>(), addChatRequest.CreatorId), Times.Once);
         _mockUnitOfWork.Verify(u => u.CommitAsync(), Times.Once);
     }
 
