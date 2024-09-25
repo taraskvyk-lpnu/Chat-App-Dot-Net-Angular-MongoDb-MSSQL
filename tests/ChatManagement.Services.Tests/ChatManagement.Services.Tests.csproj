@@ -22,10 +22,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ChatManagement.API\ChatManagement.API.csproj" />
-      <ProjectReference Include="..\ChatManagement.DataAccess\ChatManagement.DataAccess.csproj" />
-      <ProjectReference Include="..\ChatManagement.Domain\ChatManagement.Domain.csproj" />
-      <ProjectReference Include="..\ChatManagement.Services\ChatManagement.Services.csproj" />
+      <ProjectReference Include="..\..\src\ChatManagement.Domain\ChatManagement.Domain.csproj" />
+      <ProjectReference Include="..\..\src\ChatManagement.Services\ChatManagement.Services.csproj" />
+      <ProjectReference Include="..\..\src\ChatManagement.API\ChatManagement.API.csproj" />
+      <ProjectReference Include="..\..\src\ChatManagement.DataAccess\ChatManagement.DataAccess.csproj" />
     </ItemGroup>
 
 </Project>
