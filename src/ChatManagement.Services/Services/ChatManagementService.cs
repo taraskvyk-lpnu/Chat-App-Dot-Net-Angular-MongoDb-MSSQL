@@ -15,7 +15,7 @@ public class ChatManagementService : IChatManagementService
         _unitOfWork = unitOfWork;
     }
     
-    public async Task AddChatAsync(AddChatRequest addChatRequest)
+    public async Task<ChatDto> AddChatAsync(AddChatRequest addChatRequest)
     {
         var chatDto = new ChatDto
         {
@@ -25,8 +25,11 @@ public class ChatManagementService : IChatManagementService
             UserIds = addChatRequest.UserIds ?? new List<Guid>()
         };
         
-        await _unitOfWork.Chat.AddChatAsync(chatDto, addChatRequest.CreatorId);
+        var chat = await _unitOfWork.Chat.AddChatAsync(chatDto, addChatRequest.CreatorId);
         await _unitOfWork.CommitAsync();
+
+        chatDto.Id = chat.Id;
+        return chatDto;
     }
 
     public async Task UpdateChatAsync(UpdateChatRequest updateChatRequest)

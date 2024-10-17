@@ -1,0 +1,40 @@
+﻿{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/users",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5114
+        }
+      ],
+      "UpstreamPathTemplate": "/api/users",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/users/{Id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5114
+        }
+      ],
+      "UpstreamPathTemplate": "/api/users/{Id}",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/users/{filter}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5114
+        }
+      ],
+      "UpstreamPathTemplate": "/api/users/{filter}",
+      "UpstreamHttpMethod": [ "Get" ]
+    }
+  ]
+}

@@ -44,11 +44,12 @@ public class ChatsController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<ResponseDto>> CreateChat([FromBody] AddChatRequest addChatRequest)
     {
-        await _chatManagementService.AddChatAsync(addChatRequest);
+        var chatDto = await _chatManagementService.AddChatAsync(addChatRequest);
         
         return new ResponseDto
         {
             IsSuccess = true,
+            Data = chatDto,
             Message = "Chat created successfully",
         };
     }

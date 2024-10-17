@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using ChatMessaging.Contracts;
 using ChatMessaging.DataAccess;
-using ChatMessaging.Implementations;
+using ChatMessaging.DataAccess.Repository.Implementations;
 using ChatMessaging.Services.Contracts;
 using ChatMessaging.Services.Implementations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

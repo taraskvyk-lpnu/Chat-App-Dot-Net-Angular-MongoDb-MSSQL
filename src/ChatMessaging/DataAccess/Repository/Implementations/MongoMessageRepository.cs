@@ -1,9 +1,8 @@
 ﻿using ChatMessaging.Contracts;
-using ChatMessaging.DataAccess;
 using ChatMessaging.Models;
 using MongoDB.Driver;
 
-namespace ChatMessaging.Implementations;
+namespace ChatMessaging.DataAccess.Repository.Implementations;
 
 public class MongoMessageRepository : IMessageRepository
 {
@@ -46,6 +45,7 @@ public class MongoMessageRepository : IMessageRepository
             throw new Exception("Message collection not found.");
         }
         
+        message.CreatedAt = DateTime.UtcNow.ToString("o", System.Globalization.CultureInfo.InvariantCulture);
         await messageCollection.InsertOneAsync(message);
     }
     

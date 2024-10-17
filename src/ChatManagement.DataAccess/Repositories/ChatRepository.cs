@@ -19,7 +19,7 @@ public class ChatRepository : Repository<Chat>, IChatRepository
             .ToListAsync();
     }
     
-    public async Task AddChatAsync(ChatDto chatDto, Guid userId)
+    public async Task<Chat> AddChatAsync(ChatDto chatDto, Guid userId)
     {
         var chat = await _chatContext.Chats.FirstOrDefaultAsync(c => c.Title == chatDto.Title);
 
@@ -40,6 +40,8 @@ public class ChatRepository : Repository<Chat>, IChatRepository
         
         await _chatContext.Chats.AddAsync(chat);
         await _chatContext.SaveChangesAsync();
+        
+        return chat;
     }
     
     public async Task UpdateChatAsync(ChatDto chatDto, Guid userId)
