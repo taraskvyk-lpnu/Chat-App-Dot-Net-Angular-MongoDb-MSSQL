@@ -12,11 +12,13 @@ public class Program
         
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
         
         builder.Services.AddUserDbContext(builder.Configuration["ConnectionStrings:DefaultConnection"]!);
         builder.Services.AddScopedServices();
         builder.Services.AddMapper();
+        builder.AddSwaggerGen();
+        builder.AddCustomCors();
+        builder.AddJwtAuth();
         
         var app = builder.Build();
 
@@ -27,9 +29,11 @@ public class Program
             app.UseSwaggerUI();
         }
 
-        app.MapControllers();
         app.UseHttpsRedirection();
+        app.UseAuthentication();
         app.UseAuthorization();
+        app.UseCors("FullAccess");
+        app.MapControllers();
         
         app.Run();
     }
