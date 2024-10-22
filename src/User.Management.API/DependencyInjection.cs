@@ -97,4 +97,12 @@ public static class DependencyInjection
                 };
             });
     }
+    
+    public static void AddAuthPolicies(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddAuthorization(options =>
+        {
+            options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
+        });
+    }
 }

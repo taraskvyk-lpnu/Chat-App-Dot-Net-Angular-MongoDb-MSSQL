@@ -5,12 +5,10 @@ namespace ChatManagement.Domain.Repositories;
 
 public interface IChatRepository : IRepository<Chat>
 {
-    Task AttachUserToChatAsync(Guid chatId, Guid userId);
-    Task DetachUserFromChatAsync(Guid chatId, Guid userId);
+    Task<Chat> AttachUserToChatAsync(Guid chatId, Guid userId);
+    Task<Chat> DetachUserFromChatAsync(Guid chatId, Guid userId);
     Task<IEnumerable<Chat>> GetChatsByUserIdAsync(Guid userId);
-    
-    //Task<IEnumerable<User>> GetUsersByChatIdAsync(string chatId);
     Task<Chat> AddChatAsync(ChatDto chatDto, Guid userId);
-    Task UpdateChatAsync(ChatDto chatDto, Guid userId);
+    Task<Chat> UpdateChatAsync(ChatDto chatDto, Guid userId);
     Task RemoveChatAsync(Guid chatId, Guid userId);
 }

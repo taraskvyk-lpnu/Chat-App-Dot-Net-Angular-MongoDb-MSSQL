@@ -16,7 +16,17 @@ public class UserRepository : IUserRepository
     {
         return await _context.AspNetUsers.ToListAsync();
     }
+    
+    public async Task<IEnumerable<ApplicationUser?>> GetUsersAsync(List<Guid> ids)
+    {
+        var idStrings = ids.Select(id => id.ToString()).ToList();
 
+        return await _context.AspNetUsers
+            .Where(u => idStrings.Contains(u!.Id))
+            .ToListAsync();
+    }
+
+    
     public async Task<ApplicationUser?> GetUserAsync(Guid id)
     {
         return await _context.AspNetUsers.FindAsync(id.ToString());

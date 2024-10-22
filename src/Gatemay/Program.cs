@@ -10,8 +10,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Configuration
     .AddJsonFile("ocelot.chats.json", optional: false, reloadOnChange: true)
-    .AddJsonFile("ocelot.chathub.json", optional: false, reloadOnChange: true)
-    .AddJsonFile("ocelot.user.management.json", optional: false, reloadOnChange: true);
+    .AddJsonFile("ocelot.chathub.json", optional: false, reloadOnChange: true);
 
 builder.Services.AddOcelot(builder.Configuration);
 builder.AddCors();

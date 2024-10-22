@@ -21,6 +21,13 @@ public class UserService : IUserService
         
         return mapper.Map<IEnumerable<UserDto>>(users);
     }
+    
+    public async Task<IEnumerable<UserDto>> GetUsersAsync(List<Guid> ids)
+    {
+        var users = await unitOfWork.UserRepository.GetUsersAsync(ids);
+        
+        return mapper.Map<IEnumerable<UserDto>>(users);
+    }
 
     public async Task<UserDto> GetUserAsync(Guid id)
     {

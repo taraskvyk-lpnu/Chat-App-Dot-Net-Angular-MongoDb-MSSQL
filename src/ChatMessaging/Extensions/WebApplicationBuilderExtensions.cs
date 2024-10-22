@@ -81,7 +81,6 @@ public static class WebApplicationBuilderExtensions
                 builder => builder
                     .AllowAnyMethod()
                     .AllowAnyHeader()
-                    .SetIsOriginAllowed(origin => true) 
                     .AllowCredentials());
         });
 

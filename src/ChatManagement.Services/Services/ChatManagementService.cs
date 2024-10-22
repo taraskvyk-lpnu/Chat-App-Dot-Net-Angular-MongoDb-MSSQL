@@ -1,48 +1,41 @@
-﻿using ChatManagement.Domain;
+﻿using AutoMapper;
+using ChatManagement.Domain;
 using ChatManagement.Domain.Models.ChatRequests;
 using ChatManagement.Domain.Models.Dtos;
 using ChatManagement.Domain.Services;
-using ChatManagement.Infrastructure.MappingExtensions;
+using ChatManagement.Infrastructure.CustomException;
 
 namespace ChatManagement.Services.Services;
 
 public class ChatManagementService : IChatManagementService
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
 
-    public ChatManagementService(IUnitOfWork unitOfWork)
+    public ChatManagementService(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
+        _mapper = mapper;
     }
     
     public async Task<ChatDto> AddChatAsync(AddChatRequest addChatRequest)
     {
-        var chatDto = new ChatDto
-        {
-            CreatorId = addChatRequest.CreatorId,
-            CreatedAt = DateTime.Now,
-            Title = addChatRequest.Title,
-            UserIds = addChatRequest.UserIds ?? new List<Guid>()
-        };
+        var chatDto = _mapper.Map<ChatDto>(addChatRequest);
         
         var chat = await _unitOfWork.Chat.AddChatAsync(chatDto, addChatRequest.CreatorId);
         await _unitOfWork.CommitAsync();
 
-        chatDto.Id = chat.Id;
-        return chatDto;
+        return _mapper.Map<ChatDto>(chat);
     }
 
-    public async Task UpdateChatAsync(UpdateChatRequest updateChatRequest)
+    public async Task<ChatDto> UpdateChatAsync(UpdateChatRequest updateChatRequest)
     {
-        var chatDto = new ChatDto
-        {
-            Id = updateChatRequest.ChatId,
-            Title = updateChatRequest.Title,
-            UserIds = updateChatRequest.UserIds ?? new List<Guid>()
-        };
+        var chatDto = _mapper.Map<ChatDto>(updateChatRequest);
         
-        await _unitOfWork.Chat.UpdateChatAsync(chatDto, updateChatRequest.UserId);
+        var chat = await _unitOfWork.Chat.UpdateChatAsync(chatDto, updateChatRequest.UserId);
         await _unitOfWork.CommitAsync();
+        
+        return _mapper.Map<ChatDto>(chat);
     }
 
     public async Task RemoveChatAsync(RemoveChatRequest deleteChatRequest)
@@ -54,29 +47,51 @@ public class ChatManagementService : IChatManagementService
     public async Task<IEnumerable<ChatDto>> GetAllChatsAsync()
     {
         var chats = await _unitOfWork.Chat.GetAllAsync();
-        return chats.Select(c => c.ToDto());
+        
+        if (chats == null)
+        {
+            throw new NotFoundException($"Chats do not exist");
+        }
+        
+        return _mapper.Map<IEnumerable<ChatDto>>(chats);
     }
 
     public async Task<ChatDto> GetChatByIdAsync(Guid chatId)
     {
         var chat = await _unitOfWork.Chat.GetByIdAsync(chatId);
-        return chat.ToDto();
+        
+        if (chat == null)
+        {
+            throw new NotFoundException($"Chat with id '{chatId}' does not exist");
+        }
+        
+        return _mapper.Map<ChatDto>(chat);
     }
     
-    public async Task<List<ChatDto>> GetChatsByUserIdAsync(Guid userId)
+    public async Task<IEnumerable<ChatDto>> GetChatsByUserIdAsync(Guid userId)
     {
         var chats = await _unitOfWork.Chat.GetChatsByUserIdAsync(userId);
-        return chats.Select(c => c.ToDto()).ToList();
+        
+        if (chats == null)
+        {
+            throw new NotFoundException($"Chats for user with id '{userId}' does not exist");
+        }
+        
+        return _mapper.Map<IEnumerable<ChatDto>>(chats);
     }
     
-    public async Task AttachUserToChatAsync(AttachUserRequest addUserToChatRequest)
+    public async Task<ChatDto> AttachUserToChatAsync(AttachUserRequest addUserToChatRequest)
     {
-        await _unitOfWork.Chat.AttachUserToChatAsync(addUserToChatRequest.ChatId, addUserToChatRequest.UserToAddId);
+        var chat =  await _unitOfWork.Chat.AttachUserToChatAsync(addUserToChatRequest.ChatId, addUserToChatRequest.UserToAddId);
         await _unitOfWork.CommitAsync();
+        
+        return _mapper.Map<ChatDto>(chat);
     }
-    public async Task DetachUserFromChatAsync(DetachUserRequest detachUserRequest)
+    public async Task<ChatDto> DetachUserFromChatAsync(DetachUserRequest detachUserRequest)
     {
-        await _unitOfWork.Chat.DetachUserFromChatAsync(detachUserRequest.ChatId, detachUserRequest.UserToDetachId);
+        var chat = await _unitOfWork.Chat.DetachUserFromChatAsync(detachUserRequest.ChatId, detachUserRequest.UserToDetachId);
         await _unitOfWork.CommitAsync();
+
+        return _mapper.Map<ChatDto>(chat);
     }
 }

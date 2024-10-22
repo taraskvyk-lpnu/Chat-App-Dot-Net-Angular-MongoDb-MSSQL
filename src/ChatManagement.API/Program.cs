@@ -1,4 +1,5 @@
 using ChatManagement.API.Extensions;
+using ChatManagement.Infrastructure.Extensions;
 using ChatManagement.Infrastructure.Middlewares;
 namespace ChatManagement.API;
 
@@ -16,6 +17,7 @@ public class Program
         builder.AddJwtAuth();
         builder.AddDbContext();
         builder.AddScopedServices();
+        builder.Services.AddInfrastructure();
         
         builder.Services.AddEndpointsApiExplorer();
         builder.AddSwaggerGen();

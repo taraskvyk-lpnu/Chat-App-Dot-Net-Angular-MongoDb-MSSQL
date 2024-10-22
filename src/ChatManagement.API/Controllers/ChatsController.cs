@@ -1,5 +1,4 @@
 ﻿using ChatManagement.Domain.Models.ChatRequests;
-using ChatManagement.Domain.Models.Dtos;
 using ChatManagement.Domain.Services;
 using ChatManagement.Infrastructure.ResponseDtos;
 using Microsoft.AspNetCore.Authorization;
@@ -46,59 +45,75 @@ public class ChatsController : ControllerBase
     {
         var chatDto = await _chatManagementService.AddChatAsync(addChatRequest);
         
-        return new ResponseDto
+        var response = new ResponseDto
         {
             IsSuccess = true,
             Data = chatDto,
             Message = "Chat created successfully",
         };
+
+        return Ok(response);
     }
     
-    [HttpPut("{id}")]
-    public async Task<ActionResult<ResponseDto>> UpdateChat(Guid id, [FromBody] UpdateChatRequest updateChatRequest)
+    [HttpPut]
+    public async Task<ActionResult<ResponseDto>> UpdateChat([FromBody] UpdateChatRequest updateChatRequest)
     {
-        await _chatManagementService.UpdateChatAsync(updateChatRequest);
+        var chatDto = await _chatManagementService.UpdateChatAsync(updateChatRequest);
         
-        return new ResponseDto
+        var response = new ResponseDto
         {
+            Data = chatDto,
             IsSuccess = true,
             Message = "Chat updated successfully",
         };
+        
+        return Ok(response);
     }
     
-    [HttpDelete("{id}")]
-    public async Task<ActionResult<ResponseDto>> RemoveChat(RemoveChatRequest removeChatRequest)
+    [HttpDelete("{chatId}")]
+    public async Task<ActionResult<ResponseDto>> RemoveChat(Guid chatId, Guid userId)
     {
+        var removeChatRequest = new RemoveChatRequest { ChatId = chatId, UserId = userId };
         await _chatManagementService.RemoveChatAsync(removeChatRequest);
         
-        return new ResponseDto
+        var response = new ResponseDto
         {
+            Data = chatId,
             IsSuccess = true,
             Message = "Chat deleted successfully",
         };
+        
+        return Ok(response);
     }
+
     
     [HttpPost("attach-user")]
     public async Task<ActionResult<ResponseDto>> AttachUserToChat([FromBody] AttachUserRequest attachUserRequest)
     {
-        await _chatManagementService.AttachUserToChatAsync(attachUserRequest);
+        var chatDto = await _chatManagementService.AttachUserToChatAsync(attachUserRequest);
         
-        return new ResponseDto
+        var response = new ResponseDto
         {
+            Data = chatDto,
             IsSuccess = true,
             Message = "User attached to chat successfully",
         };
+        
+        return Ok(response);
     }
     
     [HttpPost("detach-user")]
     public async Task<ActionResult<ResponseDto>> DetachUserFromChat([FromBody] DetachUserRequest detachUserRequest)
     {
-        await _chatManagementService.DetachUserFromChatAsync(detachUserRequest);
+        var chatDto = await _chatManagementService.DetachUserFromChatAsync(detachUserRequest);
         
-        return new ResponseDto
+        var response = new ResponseDto
         {
+            Data = chatDto,
             IsSuccess = true,
             Message = "User detached from chat successfully",
         };
+        
+        return Ok(response);
     }
-}
+}   

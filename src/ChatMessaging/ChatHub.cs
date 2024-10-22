@@ -1,6 +1,5 @@
 ﻿using ChatMessaging.Models.MessageRequests;
 using ChatMessaging.Services.Contracts;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 
 namespace ChatMessaging
@@ -23,12 +22,27 @@ namespace ChatMessaging
 
         public async Task SendMessage(AddMessageRequest request)
         {
+            request.Message.CreatedAt = DateTime.Now.ToString("hh:mm:ss");
             var result = await _messageService.AddMessageAsync(request);
 
             if (result) 
                 await Clients.Group(request.ChatId.ToString()).SendAsync("ReceiveMessage", request.ChatId, request.Message);
         }
 
+        public async Task UpdateMessage(UpdateMessageRequest request)
+        {
+            var result = await _messageService.UpdateMessageAsync(request);
+
+            if (result)
+                await Clients.Group(request.ChatId.ToString()).SendAsync("MessageUpdated", request.ChatId, request.Message);
+        }
+        
+        public async Task DeleteMessage(DeleteMessageRequest request)
+        {
+            await _messageService.DeleteMessageAsync(request);
+            await Clients.Group(request.ChatId.ToString()).SendAsync("MessageDeleted", request.ChatId, request.MessageId);
+        }
+        
         private async Task LoadMessagesAsync(Guid chatId)
         {
             var messages = await _messageService.GetMessagesAsync(chatId);

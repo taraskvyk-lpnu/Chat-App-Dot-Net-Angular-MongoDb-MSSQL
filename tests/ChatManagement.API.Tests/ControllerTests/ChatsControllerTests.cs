@@ -63,7 +63,7 @@ public class ChatsControllerTests
     {
         var updateChatRequest = new UpdateChatRequest { ChatId = Guid.NewGuid(), Title = "Updated Chat" };
 
-        var result = await _controller.UpdateChat(updateChatRequest.ChatId, updateChatRequest);
+        var result = await _controller.UpdateChat(updateChatRequest);
 
         var actionResult = Assert.IsType<ActionResult<ResponseDto>>(result);
         var responseDto = Assert.IsType<ResponseDto>(actionResult.Value);
@@ -74,9 +74,9 @@ public class ChatsControllerTests
     [Fact]
     public async Task RemoveChat_ReturnsResponseDto_WithSuccessMessage()
     {
-        var removeChatRequest = new RemoveChatRequest { ChatId = Guid.NewGuid() };
+        var removeChatRequest = new RemoveChatRequest { ChatId = Guid.NewGuid(), UserId = Guid.NewGuid()};
 
-        var result = await _controller.RemoveChat(removeChatRequest);
+        var result = await _controller.RemoveChat(removeChatRequest.ChatId, removeChatRequest.UserId);
 
         var actionResult = Assert.IsType<ActionResult<ResponseDto>>(result);
         var responseDto = Assert.IsType<ResponseDto>(actionResult.Value);

@@ -44,7 +44,7 @@ public class ChatRepository : Repository<Chat>, IChatRepository
         return chat;
     }
     
-    public async Task UpdateChatAsync(ChatDto chatDto, Guid userId)
+    public async Task<Chat> UpdateChatAsync(ChatDto chatDto, Guid userId)
     {
         var chat = await _chatContext.Chats.FirstOrDefaultAsync(c => c.Id == chatDto.Id);
 
@@ -61,6 +61,8 @@ public class ChatRepository : Repository<Chat>, IChatRepository
         chat.Title = chatDto.Title;
         chat.UserIds = chatDto.UserIds;
         await _chatContext.SaveChangesAsync();
+
+        return chat;
     }
     
     public async Task RemoveChatAsync(Guid chatId, Guid userId)
@@ -81,7 +83,7 @@ public class ChatRepository : Repository<Chat>, IChatRepository
         await _chatContext.SaveChangesAsync();
     }
     
-    public async Task AttachUserToChatAsync(Guid chatId, Guid userId)
+    public async Task<Chat> AttachUserToChatAsync(Guid chatId, Guid userId)
     {
         var chat = await _chatContext.Chats.FirstOrDefaultAsync(c => c.Id == chatId);
 
@@ -97,9 +99,11 @@ public class ChatRepository : Repository<Chat>, IChatRepository
         
         chat.UserIds.Add(userId);
         await _chatContext.SaveChangesAsync();
+        
+        return chat;
     }
 
-    public async Task DetachUserFromChatAsync(Guid chatId, Guid userId)
+    public async Task<Chat> DetachUserFromChatAsync(Guid chatId, Guid userId)
     {
         var chat = await _chatContext.Chats.FirstOrDefaultAsync(c => c.Id == chatId);
 
@@ -113,12 +117,14 @@ public class ChatRepository : Repository<Chat>, IChatRepository
             throw new UserAttachmentException("This user hadn't been attached to chat");
         }
         
-        if(chat.UserIds.Contains(userId) && chat.CreatorId == userId)
+        /*if(chat.UserIds.Contains(userId) && chat.CreatorId == userId)
         {
             throw new AccessViolationException("You can't detach yourself from chat");
-        }
+        }*/
         
         chat.UserIds.Remove(userId);
         await _chatContext.SaveChangesAsync();
+
+        return chat;
     }
 }

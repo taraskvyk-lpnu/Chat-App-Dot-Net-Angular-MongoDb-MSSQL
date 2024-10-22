@@ -7,12 +7,12 @@ namespace ChatManagement.Domain.Services;
 public interface IChatManagementService
 {
     Task<ChatDto> AddChatAsync(AddChatRequest addChatRequest);
-    Task UpdateChatAsync(UpdateChatRequest updateChatRequest);
+    Task<ChatDto>  UpdateChatAsync(UpdateChatRequest updateChatRequest);
     Task RemoveChatAsync(RemoveChatRequest deleteChatRequest);
     Task<IEnumerable<ChatDto>> GetAllChatsAsync();
     Task<ChatDto> GetChatByIdAsync(Guid chatId);
-    Task<List<ChatDto>> GetChatsByUserIdAsync(Guid userId);
+    Task<IEnumerable<ChatDto>> GetChatsByUserIdAsync(Guid userId);
     
-    Task AttachUserToChatAsync(AttachUserRequest addUserToChatRequest);
-    Task DetachUserFromChatAsync(DetachUserRequest detachUserRequest);
+    Task<ChatDto> AttachUserToChatAsync(AttachUserRequest addUserToChatRequest);
+    Task<ChatDto> DetachUserFromChatAsync(DetachUserRequest detachUserRequest);
 }

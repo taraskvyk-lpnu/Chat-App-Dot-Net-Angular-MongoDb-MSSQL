@@ -252,27 +252,6 @@ public class ChatRepositoryTests
         var updatedChat = await _dbContext.Chats.FindAsync(chatId);
         Assert.DoesNotContain(userId, updatedChat!.UserIds);
     }
-    
-    [Fact]
-    public async Task DetachUserFromChatAsync_UserIsCreator_ThrowsAccessViolationException()
-    {
-        var userId = Guid.NewGuid();
-        var chatId = Guid.NewGuid();
-        
-        var chat = new ChatDomain
-        {
-            Id = chatId,
-            Title = "Chat",
-            UserIds = [userId],
-            CreatorId = userId,
-            CreatedAt = DateTime.Now
-        };
-        
-        await _dbContext.Chats.AddAsync(chat);
-        await _dbContext.SaveChangesAsync();
-
-        await Assert.ThrowsAsync<AccessViolationException>(() => _chatRepository.DetachUserFromChatAsync(chatId, userId));
-    }
 
     [Fact]
     public async Task DetachUserFromChatAsync_UserNotAttached_ThrowsUserAttachmentException()

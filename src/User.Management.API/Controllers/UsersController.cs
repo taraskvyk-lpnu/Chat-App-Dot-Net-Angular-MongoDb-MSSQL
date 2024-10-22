@@ -17,10 +17,17 @@ public class UsersController
         this.userService = userService;
     }
     
-    [HttpGet]
-    public async Task<IEnumerable<UserDto>> GetUsersAsync()
+    [HttpGet("all-users")]
+    [Authorize("RequireAdminRole")]
+    public async Task<IEnumerable<UserDto>> GetUserAsync()
     {
         return await userService.GetUsersAsync();
+    }
+    
+    [HttpGet]
+    public async Task<IEnumerable<UserDto>> GetUserAsync([FromQuery] List<Guid> ids)
+    {
+        return await userService.GetUsersAsync(ids);
     }
     
     [HttpGet("{id:guid}")]
@@ -29,7 +36,7 @@ public class UsersController
         return await userService.GetUserAsync(id);
     }
     
-    [HttpGet("{filter}")]
+    [HttpGet("filter/{filter}")]
     public async Task<IEnumerable<UserDto>> GetUsersByFilterAsync([FromRoute] string filter)
     {
         return await userService.GetUsersByFilterAsync(filter);
